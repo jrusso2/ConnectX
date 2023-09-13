@@ -2,7 +2,8 @@ package cpsc2150.extendedConnects;
 
 /*GROUP MEMBER NAMES AND GITHUB USERNAMES SHOULD GO HERE
 Jason Russo - jrusso2
-
+Evan Schwartz - eschwa2
+Joseph Becker - BoiledPNutEnjoyer
 
  */
 public class GameScreen {

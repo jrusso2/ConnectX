@@ -2,7 +2,8 @@ package cpsc2150.extendedConnectX.models;
 
 /*GROUP MEMBER NAMES AND GITHUB USERNAMES SHOULD GO HERE
 Jason Russo - jrusso2
-
+Evan Schwartz - eschwa2
+Joseph Becker - BoiledPNutEnjoyer
 
  */
 
