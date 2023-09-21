@@ -9,14 +9,23 @@ Joseph Becker - BoiledPNutEnjoyer
 
 public class GameBoard
 {
+    /**
+    * This class is for creating a gameboard to play connect 4
 
+    */
+
+
+
+/**
+     * constructor for the GameBoard object. sets the instance vars to the default values
+     */
     public GameBoard()
     {
 
     }
 
     /**
-     *
+     *This function is used to check if a column on the gameboard is full
      * @param c to select column to check
      * @return true if c is not full, false if c is full
      * @pre
@@ -30,7 +39,7 @@ public class GameBoard
     }
 
     /**
-     *
+     *This is function is used to allow a player to place their token in the lowest available spot in a column
      * @param p character who places token
      * @param c to select column to place token
      * @pre
@@ -44,7 +53,7 @@ public class GameBoard
     }
 
     /**
-     *
+     *This function indicates if a game has been won
      * @param c column last token was played
      * @return true if last token played won the game, false if last token played did not win the game
      * @pre
@@ -60,7 +69,7 @@ public class GameBoard
     }
 
     /**
-     *
+     *This function checks if a game has resulted in a tie
      * @return true if the board is full, false if the board is not full
      */
     public boolean checkTie()
@@ -72,7 +81,7 @@ public class GameBoard
     }
 
     /**
-     *
+     *This function checks to see if a game has been win with 5 matching player tokens in a row horozontally
      * @param pos position of token placed
      * @param p player who placed the last token
      * @return true if last token placed wins the game horizontally, false if not
@@ -83,7 +92,7 @@ public class GameBoard
         a row horizontally. Returns true if it does, otherwise false*/
     }
     /**
-     *
+     *This function checks to see if a game has been win with 5 matching player tokens in a row vertically
      * @param pos position of token placed
      * @param p player who placed the last token
      * @return true if last token placed wins the game vertically, false if not
@@ -94,7 +103,7 @@ public class GameBoard
         vertically. Returns true if it does, otherwise false*/
     }
     /**
-     *
+     *This function checks to see if a game has been win with 5 matching player tokens in a row diagonally
      * @param pos position of token placed
      * @param p player who placed the last token
      * @return true if last token placed wins the game diagonally, false if not
@@ -106,7 +115,7 @@ public class GameBoard
     }
 
     /**
-     *
+     *This function returns what token is at a specific position on the gameboard
      * @param pos position indicated to look at
      * @return value stored at pos, if no value returns a blank space
      */
@@ -116,10 +125,10 @@ public class GameBoard
     }
 
     /**
-     *
+     *This function determines if a player token is located as a specific position on the gameboard
      * @param pos position to look at
-     * @param player
-     * @return true if player is at pos, otherwise returns false
+     * @param player the player who we are checking is at the specified position
+     * @return true if player is at the specificed position, otherwise returns false
      */
     public boolean isPlayerAtPos(BoardPosition pos, char player)
     {
@@ -130,13 +139,13 @@ public class GameBoard
     }
 
     /**
-     * Returns a string representing the object stored at the position indicated by the Row and Column
+     * Returns a string representing the entire gameboard
      *
-     * @return string representing the object stored at the position indicated by the Row and Column
+     * @return string representing the entire gameboard
      *
      * @pre none
      *
-     * @post toString = string representing the object stored at the position indicated by the Row and Column AND Row = #Row AND Column = #Column
+     * @post toString = string representing the entire gameboard
      */
     @Override
     public String toString(){
