@@ -10,9 +10,11 @@ Joseph Becker - BoiledPNutEnjoyer
 public class GameBoard
 {
     /**
-    * This class is for creating a gameboard to play connect 4
-
-    */
+     * This class is for creating a gameboard to play connect 4
+     *
+     * @invariant 0 <= c <= number of columns on the game board
+     *
+     * */
 
 
 
@@ -29,9 +31,11 @@ public class GameBoard
      * @param c to select column to check
      * @return true if c is not full, false if c is full
      * @pre
-     * c>=0 and c<=6
+     * 0 <= c <= number of columns on the game board
      * @post
-     * the function gives boolean output indicating fullness of column c
+     * [the top-most space in each column is a blank space]
+     * [return true if column c has more than the top row blank space]
+     * [return false if column c has only one blank space (the top row)]
      */
     public boolean checkIfFree(int c)
     {
@@ -43,9 +47,10 @@ public class GameBoard
      * @param p character who places token
      * @param c to select column to place token
      * @pre
-     * p>=0 and c>=0 and c<=6
+     * p>=0 and 0 <= c <= number of columns on the game board
      * @post
-     * the function will place the players token in column c
+     * [the function will place the players token in column c in the lowest available row]
+     * self = #self
      */
     public void dropToken(char p, int c)
     {
@@ -57,9 +62,10 @@ public class GameBoard
      * @param c column last token was played
      * @return true if last token played won the game, false if last token played did not win the game
      * @pre
-     * c>=0 and c<=6
+     * 0 <= c <= number of columns on the game board
      * @post
-     * the function gives boolean output indicating if the game has been won
+     * returns true if checkHorizWin = true || checkVertWin = true || checkDiagWin = true
+     * self = #self
      */
     public boolean checkForWin(int c)
     {
@@ -71,6 +77,9 @@ public class GameBoard
     /**
      *This function checks if a game has resulted in a tie
      * @return true if the board is full, false if the board is not full
+     * @post
+     * [returns true if every space in each row in each column (apart from the top row of blank spaces) is occupied AND
+     * checkHorizWin = false && checkVertWin = false && checkDiagWin = false]
      */
     public boolean checkTie()
     {
@@ -85,6 +94,12 @@ public class GameBoard
      * @param pos position of token placed
      * @param p player who placed the last token
      * @return true if last token placed wins the game horizontally, false if not
+     * @pre
+     * 
+     * @post
+     * [returns true if last placed token is the last to make up the maximum number of consecutive same markers needed
+     * to win horizontally]
+     * self = #self
      */
     public boolean checkHorizWin(BoardPosition pos, char p)
     {
@@ -96,6 +111,12 @@ public class GameBoard
      * @param pos position of token placed
      * @param p player who placed the last token
      * @return true if last token placed wins the game vertically, false if not
+     * @pre
+     *
+     * @post
+     * [returns true if last placed token is the last to make up the maximum number of consecutive same markers needed
+     * to win vertically]
+     * self = #self
      */
     public boolean checkVertWin(BoardPosition pos, char p)
     {
@@ -107,7 +128,12 @@ public class GameBoard
      * @param pos position of token placed
      * @param p player who placed the last token
      * @return true if last token placed wins the game diagonally, false if not
-     */
+     * @pre
+     * @post
+     * [returns true if last placed token is the last to make up the maximum number of consecutive same markers needed
+     * to win diagonally]
+     * self = #self
+     * */
     public boolean checkDiagWin(BoardPosition pos, char p)
     {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
