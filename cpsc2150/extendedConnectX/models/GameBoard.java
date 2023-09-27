@@ -77,6 +77,8 @@ public class GameBoard
     /**
      *This function checks if a game has resulted in a tie
      * @return true if the board is full, false if the board is not full
+     * @pre
+     * none
      * @post
      * [returns true if every space in each row in each column (apart from the top row of blank spaces) is occupied AND
      * checkHorizWin = false && checkVertWin = false && checkDiagWin = false]
@@ -95,7 +97,7 @@ public class GameBoard
      * @param p player who placed the last token
      * @return true if last token placed wins the game horizontally, false if not
      * @pre
-     * 
+     * p != checkIfFree(c)
      * @post
      * [returns true if last placed token is the last to make up the maximum number of consecutive same markers needed
      * to win horizontally]
@@ -112,7 +114,7 @@ public class GameBoard
      * @param p player who placed the last token
      * @return true if last token placed wins the game vertically, false if not
      * @pre
-     *
+     * p != checkIfFree(c)
      * @post
      * [returns true if last placed token is the last to make up the maximum number of consecutive same markers needed
      * to win vertically]
@@ -129,6 +131,7 @@ public class GameBoard
      * @param p player who placed the last token
      * @return true if last token placed wins the game diagonally, false if not
      * @pre
+     * p != checkIfFree(c)
      * @post
      * [returns true if last placed token is the last to make up the maximum number of consecutive same markers needed
      * to win diagonally]
@@ -144,6 +147,10 @@ public class GameBoard
      *This function returns what token is at a specific position on the gameboard
      * @param pos position indicated to look at
      * @return value stored at pos, if no value returns a blank space
+     * @pre
+     * none
+     * @post
+     * self = #self
      */
     public char whatsAtPos(BoardPosition pos)
     {
@@ -155,6 +162,11 @@ public class GameBoard
      * @param pos position to look at
      * @param player the player who we are checking is at the specified position
      * @return true if player is at the specificed position, otherwise returns false
+     * @pre
+     * p is not an empty character
+     * @post
+     * [returns true if player is at pos, returns false if player is not at pos]
+     * self = #self
      */
     public boolean isPlayerAtPos(BoardPosition pos, char player)
     {
@@ -172,6 +184,7 @@ public class GameBoard
      * @pre none
      *
      * @post toString = string representing the entire gameboard
+     * self = #self
      */
     @Override
     public String toString(){
