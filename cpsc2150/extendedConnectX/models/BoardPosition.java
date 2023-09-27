@@ -19,7 +19,7 @@ public class BoardPosition
     /**
      * constructor for the BoardPosition object. sets the instance vars to the values passed in via params
      * 
-     * @pre 0 <= aRow < number of rows on the gameboard AND 0 <= aColumn < number of columns on the gameboard
+     * @pre 0 <= aRow AND 0 <= aColumn 
      * 
      * @post Row = aRow AND Column = aColumn
      * 
