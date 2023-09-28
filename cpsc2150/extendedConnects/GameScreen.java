@@ -19,7 +19,7 @@ public class GameScreen {
 
     }
 
-    public bool gameReplay()
+    public boolean gameReplay()
     {
 
     }
