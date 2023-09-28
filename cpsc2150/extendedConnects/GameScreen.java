@@ -19,12 +19,12 @@ public class GameScreen {
 
     }
 
-    public gameReplay()
+    public bool gameReplay()
     {
 
     }
 
-    public static turnTracker()
+    public static char turnTracker()
     {
 
     }
