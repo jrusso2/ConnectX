@@ -12,7 +12,7 @@ public class GameBoard
     /**
      * This class is for creating a gameboard to play connect 4
      *
-     * @invariant 0 <= c <= number of columns on the game board
+     * @invariant 0 <= c <= NUM_COLS
      *
      * */
 
@@ -35,7 +35,7 @@ public class GameBoard
      * @param c to select column to check
      * @return true if c is not full, false if c is full
      * @pre
-     * 0 <= c <= maximum column size
+     * 0 <= c <= NUM_COLS
      * @post
      * [the top-most space in each column is a blank space]
      * [return true if column c has more than the top row blank space]
@@ -54,7 +54,7 @@ public class GameBoard
      * @param c to select column to place token
      * @pre
      * checkIfFree(c) == true
-     * 0 <= c <= maximum column size
+     * 0 <= c <= NUM_COLS
      * @post
      * [the function will place the players token, p, in column c in the lowest available row]
      * p = #p and c = #c
@@ -69,7 +69,7 @@ public class GameBoard
      * @param c column last token was played
      * @return true if last token played won the game, false if last token played did not win the game
      * @pre
-     * 0 <= c <= maximum column size
+     * 0 <= c <= NUM_COLS
      * [c must be the column where the last token was placed]
      * @post
      * [returns true if c is the column where the last token was placed and checkHorizWin = true ||
