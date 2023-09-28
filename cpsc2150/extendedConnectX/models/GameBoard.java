@@ -18,8 +18,10 @@ public class GameBoard
 
 
 
-/**
+    /**
      * constructor for the GameBoard object. sets the instance vars to the default values
+     * @post
+     * [each position in GameBoard array must be empty, array[0][0] is the bottom left, array[8][6] is the top right]
      */
     public GameBoard()
     {
@@ -31,11 +33,12 @@ public class GameBoard
      * @param c to select column to check
      * @return true if c is not full, false if c is full
      * @pre
-     * 0 <= c <= number of columns on the game board
+     * 0 <= c <= 6
      * @post
      * [the top-most space in each column is a blank space]
      * [return true if column c has more than the top row blank space]
      * [return false if column c has only one blank space (the top row)]
+     * (array[8][6] == " ") == true
      */
     public boolean checkIfFree(int c)
     {
@@ -47,9 +50,10 @@ public class GameBoard
      * @param p character who places token
      * @param c to select column to place token
      * @pre
-     * p>=0 and 0 <= c <= number of columns on the game board
+     * checkIfFree(c) == true
+     * 0 <= c <= 6
      * @post
-     * [the function will place the players token in column c in the lowest available row]
+     * [the function will place the players token, p, in column c in the lowest available row]
      * self = #self
      */
     public void dropToken(char p, int c)
@@ -62,9 +66,11 @@ public class GameBoard
      * @param c column last token was played
      * @return true if last token played won the game, false if last token played did not win the game
      * @pre
-     * 0 <= c <= number of columns on the game board
+     * 0 <= c <= 6
+     * [c must be the column where the last token was placed]
      * @post
-     * returns true if checkHorizWin = true || checkVertWin = true || checkDiagWin = true
+     * [returns true if c is the column where the last token was placed and checkHorizWin = true ||
+     * checkVertWin = true || checkDiagWin = true]
      * self = #self
      */
     public boolean checkForWin(int c)
@@ -80,8 +86,9 @@ public class GameBoard
      * @pre
      * none
      * @post
-     * [returns true if every space in each row in each column (apart from the top row of blank spaces) is occupied AND
-     * checkHorizWin = false && checkVertWin = false && checkDiagWin = false]
+     * [returns true if every space in each row in each column (apart from the top row of blank spaces) is occupied,
+     * false if not]
+     * self = #self
      */
     public boolean checkTie()
     {
