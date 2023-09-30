@@ -12,10 +12,11 @@ public class GameBoard
     /**
      * This class is for creating a gameboard to play connect 4
      *
-     * @invariant 0 <= c <= NUM_COLS
+     * @invariant 0 <= c < NUM_COLS
+     * 
      *
      * */
-
+    private char[][] board;
 
 
     /**
@@ -23,7 +24,7 @@ public class GameBoard
      * @pre
      * none
      * @post
-     * [each position in GameBoard array must be empty, array[0][0] is the bottom left, array[8][6] is the top right]
+     * [each position in GameBoard array must be empty, board[0][0] is the bottom left, board[8][6] is the top right]
      */
     public GameBoard()
     {
@@ -35,12 +36,12 @@ public class GameBoard
      * @param c to select column to check
      * @return true if c is not full, false if c is full
      * @pre
-     * 0 <= c <= NUM_COLS
+     * 0 <= c < NUM_COLS
      * @post
      * [the top-most space in each column is a blank space]
      * [return true if column c has more than the top row blank space]
      * [return false if column c has only one blank space (the top row)]
-     * (array[8][6] == " ") == true
+     * (board[8][6] == " ") == true
      * self = #self
      */
     public boolean checkIfFree(int c)
@@ -54,10 +55,10 @@ public class GameBoard
      * @param c to select column to place token
      * @pre
      * checkIfFree(c) == true
-     * 0 <= c <= NUM_COLS
+     * 0 <= c < NUM_COLS
      * @post
-     * [the function will place the players token, p, in column c in the lowest available row]
-     * p = #p and c = #c
+     * [the function will place the players token, p, in column c in the lowest available row of board]
+     * 
      */
     public void dropToken(char p, int c)
     {
@@ -69,8 +70,9 @@ public class GameBoard
      * @param c column last token was played
      * @return true if last token played won the game, false if last token played did not win the game
      * @pre
-     * 0 <= c <= NUM_COLS
+     * 0 <= c < NUM_COLS
      * [c must be the column where the last token was placed]
+     * p != " "
      * @post
      * [returns true if c is the column where the last token was placed and checkHorizWin = true ||
      * checkVertWin = true || checkDiagWin = true]
@@ -109,7 +111,7 @@ public class GameBoard
      * @pre
      * p != " "
      * @post
-     * [returns true if last placed token is the last to make up the 5 consecutive same markers horizontally]
+     * [returns true if last placed token is the last to make up the 5 consecutive same tokens horizontally]
      * self = #self
      */
     public boolean checkHorizWin(BoardPosition pos, char p)
@@ -125,7 +127,7 @@ public class GameBoard
      * @pre
      * p != " "
      * @post
-     * [returns true if last placed token is the last to make up the 5 consecutive same ertically]
+     * [returns true if last placed token is the last to make up the 5 consecutive same tokens vertically]
      * self = #self
      */
     public boolean checkVertWin(BoardPosition pos, char p)
@@ -141,7 +143,7 @@ public class GameBoard
      * @pre
      * p != " "
      * @post
-     * [returns true if last placed token is the last to make up the 5 consecutive same markers diagonally]
+     * [returns true if last placed token is the last to make up the 5 consecutive same tokens diagonally]
      * self = #self
      * */
     public boolean checkDiagWin(BoardPosition pos, char p)
