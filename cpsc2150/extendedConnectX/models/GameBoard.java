@@ -7,7 +7,7 @@ Joseph Becker - BoiledPNutEnjoyer
 
  */
 
-public class GameBoard
+public class GameBoard implements IGameBoard
 {
     /**
      * This class is for creating a gameboard to play connect 4
@@ -44,9 +44,15 @@ public class GameBoard
      * (board[8][6] == " ") == true
      * self = #self
      */
+
+    @Override
     public boolean checkIfFree(int c)
     {
-        //returns true if the column can accept another token; false otherwise.
+        // returns true if the top space in the selected column is empty, else returns false
+        if (board[NUM_ROWS-1][c] != ' ')
+            return false;
+        else
+            return true;
     }
 
     /**
@@ -60,9 +66,17 @@ public class GameBoard
      * [the function will place the players token, p, in column c in the lowest available row of board]
      * 
      */
+
+    @Override
     public void dropToken(char p, int c)
     {
         //places the character p in column c. The token will be placed in the lowest available row in column c.
+        for (int r = 0; i < NUM_ROWS; r++){
+            if (board[r][c] == ' ') {
+                board[r][c] = p;
+                return;
+            }
+        }
     }
 
     /**
@@ -78,11 +92,19 @@ public class GameBoard
      * checkVertWin = true || checkDiagWin = true]
      * self = #self
      */
+    @Override
     public boolean checkForWin(int c)
     {
         /*this function will check to see if the last token placed in column c resulted in the player winning the game.
         If so it will return true, otherwise false. Note: this is not checking the entire board for a win, it is just
         checking if the last token placed results in a win. You may call other methods to complete this method */
+
+        BoardPosition lastPos = new BoardPosition( ,c);
+
+        if (checkHorizWin() == true || checkVertWin() == true || checkDiagWin() == true)
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -95,12 +117,21 @@ public class GameBoard
      * false if not]
      * self = #self
      */
+    @Override
     public boolean checkTie()
     {
         /*this function will check to see if the game has resulted in a tie. A game is tied if there are no free board
         positions remaining. You do not need to check for any potential wins because we can assume that the players
         were checking for win conditions as they played the game. It will return true if the game is tied and
         false otherwise.*/
+
+
+        // iterates through each column, calling checkIfFree to see if there is a free space in the column
+        for (int c = 0; c < NUM_COLS; c++){
+            if checkIfFree(c) == true
+                    return false;
+        }
+        return true;
     }
 
     /**
@@ -114,6 +145,7 @@ public class GameBoard
      * [returns true if last placed token is the last to make up the 5 consecutive same tokens horizontally]
      * self = #self
      */
+    @Override
     public boolean checkHorizWin(BoardPosition pos, char p)
     {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in
@@ -130,6 +162,7 @@ public class GameBoard
      * [returns true if last placed token is the last to make up the 5 consecutive same tokens vertically]
      * self = #self
      */
+    @Override
     public boolean checkVertWin(BoardPosition pos, char p)
     {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
@@ -146,6 +179,7 @@ public class GameBoard
      * [returns true if last placed token is the last to make up the 5 consecutive same tokens diagonally]
      * self = #self
      * */
+    @Override
     public boolean checkDiagWin(BoardPosition pos, char p)
     {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
@@ -162,9 +196,11 @@ public class GameBoard
      * [returns character at the selected postition]
      * self = #self
      */
+    @Override
     public char whatsAtPos(BoardPosition pos)
     {
         //returns what is in the GameBoard at position pos If no marker is there, it returns a blank space char.
+        return board[pos.getRow()][pos.getColumn()];
     }
 
     /**
@@ -178,12 +214,17 @@ public class GameBoard
      * [returns true if player is at pos, returns false if player is not at pos]
      * self = #self
      */
+    @Override
     public boolean isPlayerAtPos(BoardPosition pos, char player)
     {
         /*returns true if the player is at pos; otherwise, it returns false. Note: this method will be implemented very
         similarly to whatsAtPos, but it's asking a different question. We only know they will be similar because we
         know GameBoard will contain a 2D array. If the data structure were to change in the future,
         these two methods could be radically different.*/
+        if (board[pos.getRow()][pos.getColumn()] == player)
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -202,16 +243,15 @@ public class GameBoard
 
     }
 
-
-
-
-
-
-
-
-
-
-
+    public int getNumRows(){
+        return NUM_ROWS;
+    }
+    public int getNumColumns(){
+        return NUM_COLS;
+    }
+    public int getNumToWin(){
+        return NUM_TO_WIN;
+    }
 
 
 
