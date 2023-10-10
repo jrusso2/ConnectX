@@ -241,7 +241,7 @@ public class GameBoard implements IGameBoard
 
     }
 
-    
+
     /**
      *This function returns what token is at a specific position on the gameboard
      * @param pos position indicated to look at
