@@ -71,7 +71,7 @@ public class GameBoard implements IGameBoard
     public void dropToken(char p, int c)
     {
         //places the character p in column c. The token will be placed in the lowest available row in column c.
-        for (int r = 0; i < NUM_ROWS; r++){
+        for (int r = 0; r < NUM_ROWS; r++){
             if (board[r][c] == ' ') {
                 board[r][c] = p;
                 return;
@@ -99,9 +99,15 @@ public class GameBoard implements IGameBoard
         If so it will return true, otherwise false. Note: this is not checking the entire board for a win, it is just
         checking if the last token placed results in a win. You may call other methods to complete this method */
 
-        BoardPosition lastPos = new BoardPosition( ,c);
+        // This block finds the row and value of the last token played, then creates a boardPosition object with that information
+        // so that it can be passed to the checkWin functions
+        int rowOfLastToken = getRowOfLastToken(int c);
+        char lastPlayerToken = board[rowOfLastToken][c]; // could be replaced with turn tracker?
+        BoardPosition lastPos = new BoardPosition(rowOfLastToken ,c);
 
-        if (checkHorizWin() == true || checkVertWin() == true || checkDiagWin() == true)
+        if (checkHorizWin(lastPos, lastPlayerToken) == true ||
+                checkVertWin(lastPos, lastPlayerToken) == true ||
+                checkDiagWin(lastPos, lastPlayerToken) == true)
             return true;
         else
             return false;
@@ -146,11 +152,35 @@ public class GameBoard implements IGameBoard
      * self = #self
      */
     @Override
-    public boolean checkHorizWin(BoardPosition pos, char p)
-    {
+    public boolean checkHorizWin(BoardPosition pos, char p) {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in
         a row horizontally. Returns true if it does, otherwise false*/
+
+        int consecutiveTokens = 0;
+
+        // variables to find the lowest and highest non-out-of-bounds columns to check for a win
+        int minCol = Math.max(0, pos.getColumn()-4);
+        int maxCol = Math.min(pos.getColumn()+4, NUM_COLS-1);
+
+        // This loop iterates through surrounding columns, incrementing consecutiveTokens if the surrounding position
+        // matches the player token. If the positions do not match consecutiveTokens is reset to 0. If consecutiveTokens
+        // reaches 5 true is returned.
+        for (int c = minCol; c < maxCol; c++) {
+            BoardPosition checkPos = new BoardPosition(pos.getRow(), c);
+            if (whatsAtPos(checkPos) == p) {
+                consecutiveTokens++;
+                if (consecutiveTokens == 5) {
+                    return true;
+                }
+            } else {
+                consecutiveTokens = 0;
+            }
+        }
+        return false;
     }
+
+
+
     /**
      *This function checks to see if a game has been win with 5 matching player tokens in a row vertically
      * @param pos position of token placed
@@ -167,7 +197,30 @@ public class GameBoard implements IGameBoard
     {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
         vertically. Returns true if it does, otherwise false*/
+        int consecutiveTokens = 0;
+
+        // variables to find the lowest and highest non-out-of-bounds rows to check for a win
+        int minRow = Math.max(0, pos.getRow()-4);
+        int maxRow = Math.min(pos.getRow()+4, NUM_ROWS-1);
+
+        // This loop iterates through surrounding rows, incrementing consecutiveTokens if the surrounding position
+        // matches the player token. If the positions do not match consecutiveTokens is reset to 0. If consecutiveTokens
+        // reaches 5 true is returned.
+        for (int r = minRow; r <= maxRow; r++) {
+            BoardPosition checkPos = new BoardPosition(r, pos.getColumn());
+            if (whatsAtPos(checkPos) == p) {
+                consecutiveTokens++;
+                if (consecutiveTokens == 5) {
+                    return true;
+                }
+            } else {
+                consecutiveTokens = 0;
+            }
+        }
+        return false;
     }
+
+
     /**
      *This function checks to see if a game has been win with 5 matching player tokens in a row diagonally
      * @param pos position of token placed
@@ -184,8 +237,11 @@ public class GameBoard implements IGameBoard
     {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
         diagonally. Returns true if it does, otherwise false Note: there are two diagonals to check*/
+
+
     }
 
+    
     /**
      *This function returns what token is at a specific position on the gameboard
      * @param pos position indicated to look at
@@ -253,6 +309,25 @@ public class GameBoard implements IGameBoard
         return NUM_TO_WIN;
     }
 
+    /**
+     *This function finds the row that the last token was played to
+     * @param c column last token was played
+     * @return the row of the last token that was played
+     * @pre
+     * 0 <= c < NUM_COLS
+     * [c must be the column where the last token was placed]
+     * @post
+     * [returns the number of the row that the last token was played]
+     * self = #self
+     */
+    public int getRowOfLastToken(int c) {
+        int count = 0;
+        for (int r = 0; r < NUM_ROWS; r++) {
+            if (board[r][c] != ' ')
+                return r;
+        }
+        return -1;
+    }
 
 
 }

@@ -17,10 +17,4 @@ public interface IGameBoard {
     boolean isPlayerAtPos(BoardPosition pos, char player);
     String toString();
 
-
-
-
-
-
-
 }
