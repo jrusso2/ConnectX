@@ -30,6 +30,8 @@ public class BoardPosition
     public BoardPosition(int aRow, int aColumn)
     {
         //parameterized constructor for BoardPosition
+        Row = aRow;
+        Column = aColumn;
     }
 
     /**
@@ -44,6 +46,7 @@ public class BoardPosition
     public int getRow()
     {
         //returns the row
+        return Row;
     }
 
       /**
@@ -58,6 +61,7 @@ public class BoardPosition
     public int getColumn()
     {
         //returns the column
+        return Column;
     }
 
     /**
@@ -74,6 +78,12 @@ public class BoardPosition
     @Override
     public boolean equals(Object obj)
     {
+        if(obj.getRow() == Row && obj.getColumn() == Column){
+            return true;
+        }
+        else{
+            return false;
+        }
 
     }
     
