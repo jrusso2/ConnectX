@@ -102,7 +102,7 @@ public class GameBoard implements IGameBoard
         // This block finds the row and value of the last token played, then creates a boardPosition object with that information
         // so that it can be passed to the checkWin functions
         int rowOfLastToken = getRowOfLastToken(int c);
-        char lastPlayerToken = board[rowOfLastToken][c]; // could be replaced with turn tracker?
+        char lastPlayerToken = board[getRowOfLastToken][c]; // could be replaced with turn tracker?
         BoardPosition lastPos = new BoardPosition(rowOfLastToken ,c);
 
         if (checkHorizWin(lastPos, lastPlayerToken) == true ||
@@ -123,21 +123,12 @@ public class GameBoard implements IGameBoard
      * false if not]
      * self = #self
      */
-    @Override
     public boolean checkTie()
     {
         /*this function will check to see if the game has resulted in a tie. A game is tied if there are no free board
         positions remaining. You do not need to check for any potential wins because we can assume that the players
         were checking for win conditions as they played the game. It will return true if the game is tied and
         false otherwise.*/
-
-
-        // iterates through each column, calling checkIfFree to see if there is a free space in the column
-        for (int c = 0; c < NUM_COLS; c++){
-            if checkIfFree(c) == true
-                    return false;
-        }
-        return true;
     }
 
     /**
@@ -233,11 +224,55 @@ public class GameBoard implements IGameBoard
      * self = #self
      * */
     @Override
-    public boolean checkDiagWin(BoardPosition pos, char p)
-    {
+    public boolean checkDiagWin(BoardPosition pos, char p) {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
         diagonally. Returns true if it does, otherwise false Note: there are two diagonals to check*/
 
+        int consecutiveTokens = 0;
+
+        // Check from bottom-left to top-right
+        for (int offset = -4; offset <= 4; offset++) {
+            int checkRow = pos.getRow() + offset;
+            int checkCol = pos.getColumn() + offset;
+
+            // Ensure we are not out of bounds
+            if (checkRow >= 0 && checkRow < NUM_ROWS && checkCol >= 0 && checkCol < NUM_COLS) {
+                BoardPosition checkPos = new BoardPosition(checkRow, checkCol);
+                if (whatsAtPos(checkPos) == p) {
+                    consecutiveTokens++;
+                    if (consecutiveTokens == 5) {
+                        return true;
+                    }
+                } else {
+                    consecutiveTokens = 0;
+                }
+            }
+        }
+
+        // Reset for the next check
+        consecutiveTokens = 0;
+
+        // Check from bottom-right to top-left
+        for (int offset = -4; offset <= 4; offset++) {
+            int checkRow = pos.getRow() + offset;
+            int checkCol = pos.getColumn() - offset;
+
+            // Ensure we are not out of bounds
+            if (checkRow >= 0 && checkRow < NUM_ROWS && checkCol >= 0 && checkCol < NUM_COLS) {
+                BoardPosition checkPos = new BoardPosition(checkRow, checkCol);
+                if (whatsAtPos(checkPos) == p) {
+                    consecutiveTokens++;
+                    if (consecutiveTokens == 5) {
+                        return true;
+                    }
+                } else {
+                    consecutiveTokens = 0;
+                }
+            }
+        }
+
+        // If neither check returned true, return false
+        return false;
 
     }
 
@@ -328,6 +363,5 @@ public class GameBoard implements IGameBoard
         }
         return -1;
     }
-
 
 }
