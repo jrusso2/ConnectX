@@ -9,7 +9,14 @@ public interface IGameBoard {
     boolean checkIfFree(int c);
     void dropToken(char p, int c);
     boolean checkForWin(int c);
-    boolean checkTie();
+    default boolean checkTie(){
+        for (int c = 0; c < NUM_COLS; c++){
+            if (checkIfFree(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
     boolean checkHorizWin(BoardPosition pos, char p);
     boolean checkVertWin(BoardPosition pos, char p);
     boolean checkDiagWin(BoardPosition pos, char p);

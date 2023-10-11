@@ -132,12 +132,6 @@ public class GameBoard implements IGameBoard
         false otherwise.*/
 
 
-        // iterates through each column, calling checkIfFree to see if there is a free space in the column
-        for (int c = 0; c < NUM_COLS; c++){
-            if checkIfFree(c) == true
-                    return false;
-        }
-        return true;
     }
 
     /**
@@ -328,6 +322,5 @@ public class GameBoard implements IGameBoard
         }
         return -1;
     }
-
 
 }
