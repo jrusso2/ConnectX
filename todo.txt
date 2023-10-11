@@ -1,4 +1,5 @@
 determine primary and secondary methods in IGameBoard, labelling as default if secondary
+    -- made checkTie default
 
 absgameboard - write an overridden implementation of toString
 
