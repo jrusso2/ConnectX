@@ -1,0 +1,19 @@
+determine primary and secondary methods in IGameBoard, labelling as default if secondary
+
+absgameboard - write an overridden implementation of toString
+
+contracts for new functions for igameboard
+
+correspondences and invariants in gameboard class
+
+add uml diagrams for IGameBoard, AbsGameBoard, GameBoard, GameScreen, and BoardPosition as needed
+
+makefile with default, run, clean -- MUST COMPILE
+
+implemnt gamescreen java so it runs
+
+implement gamescreen - validate  all user input e.g. column selected must be between 0 and 6, etc. 
+
+
+
+follow checklist
