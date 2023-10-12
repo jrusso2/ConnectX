@@ -69,7 +69,7 @@ public class BoardPosition
      * 
      * @return boolean (is object stored at position equal to Object)
      * 
-     * @param Object the object we are checking to see matches the object indicated by Row and Column
+     * @param obj the object we are checking to see matches the object indicated by Row and Column
      * 
      * @pre none
      * 
@@ -78,13 +78,17 @@ public class BoardPosition
     @Override
     public boolean equals(Object obj)
     {
-        if(obj.getRow() == Row && obj.getColumn() == Column){
-            return true;
-        }
-        else{
-            return false;
-        }
+        // Check if obj is an instance of BoardPosition
+        if (obj instanceof BoardPosition) {
+            // Cast obj to BoardPosition type
+            BoardPosition other = (BoardPosition) obj;
 
+            // call getRow and getColumn
+            if (other.getRow() == Row && other.getColumn() == Column) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
