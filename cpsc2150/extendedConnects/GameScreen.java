@@ -49,7 +49,7 @@ public class GameScreen {
      */
     public boolean gameReplay()
     {
-
+    return true;
     }
 
     /**
@@ -63,7 +63,7 @@ public class GameScreen {
      */
     public static char turnTracker()
     {
-
+    return 'r';
     }
 
 }
