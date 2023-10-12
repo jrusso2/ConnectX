@@ -1,6 +1,8 @@
 package cpsc2150.extendedConnectX;
 
 import java.util.Scanner;
+import cpsc2150.extendedConnectX.models.IGameBoard;
+import cpsc2150.extendedConnectX.models.GameBoard;
 
 
 /*GROUP MEMBER NAMES AND GITHUB USERNAMES SHOULD GO HERE
@@ -27,21 +29,30 @@ public class GameScreen {
     public static void main(String[] args)
     {
         Scanner scanner = new Scanner(System.in);
-        IGameBoard gameBoard = new GameBoard(); // Assuming GameBoard has a default constructor that initializes an empty board
+        IGameBoard gameBoard = new GameBoard();
         char currentPlayer = 'X';
 
         while (true) {
             // Display the board
             System.out.println(gameBoard.toString());
 
-            // Ask the current player for their move
-            System.out.println("Player " + currentPlayer + ", what column do you want to place your marker in?");
-            int chosenColumn = scanner.nextInt();
+            int chosenColumn = -1;
 
-            // Validate the chosen column
-            while (chosenColumn < 0 || chosenColumn >= gameBoard.getNumColumns() || !gameBoard.checkIfFree(chosenColumn)) {
-                System.out.println("Column " + chosenColumn + " is not a valid choice. Please choose again:");
+            while (true) {
+                // Ask the current player for their move
+                System.out.println("Player " + currentPlayer + ", what column do you want to place your marker in?");
                 chosenColumn = scanner.nextInt();
+
+                // Validate the chosen column
+                if (chosenColumn < 0) {
+                    System.out.println("Column cannot be less than 0");
+                } else if (chosenColumn >= gameBoard.getNumColumns()) {
+                    System.out.println("Column cannot be greater than " + (gameBoard.getNumColumns() - 1));
+                } else if (!gameBoard.checkIfFree(chosenColumn)) {
+                    System.out.println("Column is full");
+                } else {
+                    break; // Exit the loop if the column is valid
+                }
             }
 
             // Place the token
