@@ -28,7 +28,15 @@ public class GameBoard implements IGameBoard
      */
     public GameBoard()
     {
+        // Initialize the board array with NUM_ROWS and NUM_COLS from the IGameBoard interface
+        board = new char[IGameBoard.NUM_ROWS][IGameBoard.NUM_COLS];
 
+        // Loop through each position in the board and set it to a space character
+        for (int i = 0; i < IGameBoard.NUM_ROWS; i++) {
+            for (int j = 0; j < IGameBoard.NUM_COLS; j++) {
+                board[i][j] = ' ';
+            }
+        }
     }
 
     /**
@@ -331,7 +339,25 @@ public class GameBoard implements IGameBoard
      */
     @Override
     public String toString(){
+        StringBuilder boardString = new StringBuilder();
 
+        // Add column numbers at the top
+        boardString.append("|");
+        for(int c = 0; c < NUM_COLS; c++) {
+            boardString.append(c).append("|");
+        }
+        boardString.append("\n");
+
+        // Add each row of the board
+        for(int r = NUM_ROWS-1; r >= 0; r--) { // Start from the top row
+            boardString.append("|");
+            for(int c = 0; c < NUM_COLS; c++) {
+                boardString.append(board[r][c]).append("|"); // Add each column entry
+            }
+            boardString.append("\n");
+        }
+
+        return boardString.toString();
     }
 
     public int getNumRows(){
