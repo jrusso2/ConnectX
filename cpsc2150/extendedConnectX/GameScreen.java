@@ -26,56 +26,64 @@ public class GameScreen {
      * @post [the game is executed]
      *
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        IGameBoard gameBoard = new GameBoard();
-        char currentPlayer = 'X';
+        char currentPlayer;
 
-        while (true) {
-            // Display the board
-            System.out.println(gameBoard.toString());
+        while (true) { // Outer loop for replaying the game
+            IGameBoard gameBoard = new GameBoard(); // Reset the game board
+            currentPlayer = 'X'; // Reset the starting player
 
-            int chosenColumn = -1;
+            while (true) { // Inner loop for the ongoing game
+                System.out.println(gameBoard.toString());
 
-            while (true) {
-                // Ask the current player for their move
-                System.out.println("Player " + currentPlayer + ", what column do you want to place your marker in?");
-                chosenColumn = scanner.nextInt();
+                int chosenColumn = -1;
 
-                // Validate the chosen column
-                if (chosenColumn < 0) {
-                    System.out.println("Column cannot be less than 0");
-                } else if (chosenColumn >= gameBoard.getNumColumns()) {
-                    System.out.println("Column cannot be greater than " + (gameBoard.getNumColumns() - 1));
-                } else if (!gameBoard.checkIfFree(chosenColumn)) {
-                    System.out.println("Column is full");
-                } else {
-                    break; // Exit the loop if the column is valid
+                while (true) {
+                    System.out.println("Player " + currentPlayer + ", what column do you want to place your marker in?");
+                    chosenColumn = scanner.nextInt();
+
+                    if (chosenColumn < 0) {
+                        System.out.println("Column cannot be less than 0");
+                    } else if (chosenColumn >= gameBoard.getNumColumns()) {
+                        System.out.println("Column cannot be greater than " + (gameBoard.getNumColumns() - 1));
+                    } else if (!gameBoard.checkIfFree(chosenColumn)) {
+                        System.out.println("Column is full");
+                    } else {
+                        break;
+                    }
                 }
+
+                gameBoard.dropToken(currentPlayer, chosenColumn);
+
+                if (gameBoard.checkForWin(chosenColumn)) {
+                    System.out.println("Player " + currentPlayer + " wins!");
+                    break;
+                }
+
+                if (gameBoard.checkTie()) {
+                    System.out.println("The game is a tie!");
+                    break;
+                }
+
+                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
             }
 
-            // Place the token
-            gameBoard.dropToken(currentPlayer, chosenColumn);
+            // Ask if the player wants to play again
+            while (true) {
+                System.out.println("Would you like to play again? Y/N");
+                char playAgain = scanner.next().charAt(0);
 
-            // Check for a win
-            if (gameBoard.checkForWin(chosenColumn)) {
-                System.out.println("Player " + currentPlayer + " wins!");
-                break;
+                if (playAgain == 'N' || playAgain == 'n') {
+                    scanner.close();
+                    return; // Exit the program
+                } else if (playAgain == 'Y' || playAgain == 'y') {
+                    break; // Break the inner loop to start a new game
+                } 
             }
-
-            // Check for a tie
-            if (gameBoard.checkTie()) {
-                System.out.println("The game is a tie!");
-                break;
-            }
-
-            // Switch players
-            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         }
-
-        scanner.close();
     }
+
 
     /**
      * Initializes a new connectX game
