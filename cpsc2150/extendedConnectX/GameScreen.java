@@ -57,11 +57,13 @@ public class GameScreen {
                 gameBoard.dropToken(currentPlayer, chosenColumn);
 
                 if (gameBoard.checkForWin(chosenColumn)) {
+                    System.out.println(gameBoard.toString());
                     System.out.println("Player " + currentPlayer + " wins!");
                     break;
                 }
 
                 if (gameBoard.checkTie()) {
+                    System.out.println(gameBoard.toString());
                     System.out.println("The game is a tie!");
                     break;
                 }
