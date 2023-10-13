@@ -109,8 +109,8 @@ public class GameBoard implements IGameBoard
 
         // This block finds the row and value of the last token played, then creates a boardPosition object with that information
         // so that it can be passed to the checkWin functions
-        int rowOfLastToken = getRowOfLastToken(int c);
-        char lastPlayerToken = board[getRowOfLastToken][c]; // could be replaced with turn tracker?
+        int rowOfLastToken = getRowOfLastToken(c);
+        char lastPlayerToken = board[getRowOfLastToken(c)][c]; // could be replaced with turn tracker?
         BoardPosition lastPos = new BoardPosition(rowOfLastToken ,c);
 
         if (checkHorizWin(lastPos, lastPlayerToken) == true ||
@@ -131,13 +131,16 @@ public class GameBoard implements IGameBoard
      * false if not]
      * self = #self
      */
-    public boolean checkTie()
-    {
+
+
+//    public boolean checkTie()
+//    {
         /*this function will check to see if the game has resulted in a tie. A game is tied if there are no free board
         positions remaining. You do not need to check for any potential wins because we can assume that the players
         were checking for win conditions as they played the game. It will return true if the game is tied and
         false otherwise.*/
-    }
+//    }
+
 
     /**
      *This function checks to see if a game has been win with 5 matching player tokens in a row horozontally
