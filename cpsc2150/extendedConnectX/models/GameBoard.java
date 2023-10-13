@@ -238,54 +238,71 @@ public class GameBoard implements IGameBoard
     public boolean checkDiagWin(BoardPosition pos, char p) {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
         diagonally. Returns true if it does, otherwise false Note: there are two diagonals to check*/
+        
+int row=NUM_ROWS-1;
+while (board[row][pos.getColumn()]==' '){
+row--;
+}
 
-        int consecutiveTokens = 0;
+        BoardPosition checkDiag;
 
-        // Check from bottom-left to top-right
-        for (int offset = -4; offset <= 4; offset++) {
-            int checkRow = pos.getRow() + offset;
-            int checkCol = pos.getColumn() + offset;
+        //check for diagonal win with left end lower than right end
+        for (int x=0; x<NUM_TO_WIN;x++){
+            
+            //checks all permutations of diagonals containing the last placed token
+            if((row-x)>=0 && row+((NUM_TO_WIN-1)-x)< NUM_ROWS &&
+               (pos.getColumn()-x)>=0 && pos.getColumn()+((NUM_TO_WIN-1)-x)< NUM_COLS){
 
-            // Ensure we are not out of bounds
-            if (checkRow >= 0 && checkRow < NUM_ROWS && checkCol >= 0 && checkCol < NUM_COLS) {
-                BoardPosition checkPos = new BoardPosition(checkRow, checkCol);
-                if (whatsAtPos(checkPos) == p) {
-                    consecutiveTokens++;
-                    if (consecutiveTokens == 5) {
-                        return true;
+                //if no positions out of bounds, check if all diagonal positions equal to p
+                for (int j=0; j<NUM_TO_WIN;j++){
+                    checkDiag = new BoardPosition((((row)-x)+j), ((pos.getColumn()-x)+j));
+
+                    //if 5 spaces in a diagonal have the same token, that player wins
+                    if (whatsAtPos(checkDiag)==board[row][pos.getColumn()]){
+                        if (j == NUM_TO_WIN-1){
+                            return true;
+                        }
                     }
-                } else {
-                    consecutiveTokens = 0;
+                    else {
+                            break;
+                        }
+                    
+                    }
                 }
-            }
+               }
+
+               //check for diagonal win with right end lower than left end
+               for (int x=0; x<NUM_TO_WIN;x++){
+           
+            //checks all permutations of diagonals containing the last placed token
+            if((row+x)<NUM_ROWS && row-((NUM_TO_WIN-1)-x)>=0 &&
+               (pos.getColumn()-x)>=0 && pos.getColumn()+((NUM_TO_WIN-1)-x)< NUM_COLS){
+
+                //if no positions out of bounds, check if all diagonal positions equal to p
+                for (int j=0; j<NUM_TO_WIN;j++){
+                    checkDiag = new BoardPosition((((row)-((NUM_TO_WIN-1)-x-j))), (pos.getColumn()+((NUM_TO_WIN-1)-x-j)));
+
+                    //if 5 spaces in a diagonal have the same token, that player wins
+                    if (whatsAtPos(checkDiag)==board[row][pos.getColumn()]){
+                        if (j == NUM_TO_WIN-1){
+                            return true;
+                        }
+                    }
+                    else {
+                            break;
+                        }
+                    
+                    }
+                }
+               }
+
+            
+               return false;
         }
 
-        // Reset for the next check
-        consecutiveTokens = 0;
 
-        // Check from bottom-right to top-left
-        for (int offset = -4; offset <= 4; offset++) {
-            int checkRow = pos.getRow() + offset;
-            int checkCol = pos.getColumn() - offset;
 
-            // Ensure we are not out of bounds
-            if (checkRow >= 0 && checkRow < NUM_ROWS && checkCol >= 0 && checkCol < NUM_COLS) {
-                BoardPosition checkPos = new BoardPosition(checkRow, checkCol);
-                if (whatsAtPos(checkPos) == p) {
-                    consecutiveTokens++;
-                    if (consecutiveTokens == 5) {
-                        return true;
-                    }
-                } else {
-                    consecutiveTokens = 0;
-                }
-            }
-        }
 
-        // If neither check returned true, return false
-        return false;
-
-    }
 
 
     /**
@@ -385,10 +402,10 @@ public class GameBoard implements IGameBoard
      * self = #self
      */
     public int getRowOfLastToken(int c) {
-        int count = 0;
-        for (int r = 0; r < NUM_ROWS; r++) {
-            if (board[r][c] != ' ')
-                return r;
+
+
+        for (int q = 0; q < NUM_ROWS; q++) {
+            if (board[q][c] != ' ') {return q;}//for testing, fix this logic if have time
         }
         return -1;
     }
