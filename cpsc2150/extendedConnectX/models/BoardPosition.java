@@ -78,13 +78,15 @@ public class BoardPosition
     @Override
     public boolean equals(Object obj)
     {
-        if(obj.getRow() == Row && obj.getColumn() == Column){
-            return true;
+        if(obj instanceof BoardPosition)
+        {
+            BoardPosition board = (BoardPosition) obj;
+            return board.getRow() == Row && board.getColumn() == Column;
         }
-        else{
+        else
+        {
             return false;
         }
-
     }
     
     /**

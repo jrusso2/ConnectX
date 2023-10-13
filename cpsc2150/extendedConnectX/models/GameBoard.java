@@ -1,11 +1,11 @@
 package cpsc2150.extendedConnectX.models;
 
-/*GROUP MEMBER NAMES AND GITHUB USERNAMES SHOULD GO HERE
+/*
+GROUP MEMBER NAMES AND GITHUB USERNAMES SHOULD GO HERE
 Jason Russo - jrusso2
 Evan Schwartz - eschwa2
 Joseph Becker - BoiledPNutEnjoyer
-
- */
+*/
 
 public class GameBoard implements IGameBoard
 {
@@ -28,7 +28,15 @@ public class GameBoard implements IGameBoard
      */
     public GameBoard()
     {
+        // Initialize the board array with NUM_ROWS and NUM_COLS from the IGameBoard interface
+        board = new char[IGameBoard.NUM_ROWS][IGameBoard.NUM_COLS];
 
+        // Loop through each position in the board and set it to a space character
+        for (int i = 0; i < IGameBoard.NUM_ROWS; i++) {
+            for (int j = 0; j < IGameBoard.NUM_COLS; j++) {
+                board[i][j] = ' ';
+            }
+        }
     }
 
     /**
@@ -101,8 +109,8 @@ public class GameBoard implements IGameBoard
 
         // This block finds the row and value of the last token played, then creates a boardPosition object with that information
         // so that it can be passed to the checkWin functions
-        int rowOfLastToken = getRowOfLastToken(int c);
-        char lastPlayerToken = board[getRowOfLastToken][c]; // could be replaced with turn tracker?
+        int rowOfLastToken = getRowOfLastToken(c);
+        char lastPlayerToken = board[getRowOfLastToken(c)][c]; // could be replaced with turn tracker?
         BoardPosition lastPos = new BoardPosition(rowOfLastToken ,c);
 
         if (checkHorizWin(lastPos, lastPlayerToken) == true ||
@@ -123,13 +131,16 @@ public class GameBoard implements IGameBoard
      * false if not]
      * self = #self
      */
-    public boolean checkTie()
-    {
+
+
+//    public boolean checkTie()
+//    {
         /*this function will check to see if the game has resulted in a tie. A game is tied if there are no free board
         positions remaining. You do not need to check for any potential wins because we can assume that the players
         were checking for win conditions as they played the game. It will return true if the game is tied and
         false otherwise.*/
-    }
+//    }
+
 
     /**
      *This function checks to see if a game has been win with 5 matching player tokens in a row horozontally
@@ -331,7 +342,25 @@ public class GameBoard implements IGameBoard
      */
     @Override
     public String toString(){
+        StringBuilder boardString = new StringBuilder();
 
+        // Add column numbers at the top
+        boardString.append("|");
+        for(int c = 0; c < NUM_COLS; c++) {
+            boardString.append(c).append("|");
+        }
+        boardString.append("\n");
+
+        // Add each row of the board
+        for(int r = NUM_ROWS-1; r >= 0; r--) { // Start from the top row
+            boardString.append("|");
+            for(int c = 0; c < NUM_COLS; c++) {
+                boardString.append(board[r][c]).append("|"); // Add each column entry
+            }
+            boardString.append("\n");
+        }
+
+        return boardString.toString();
     }
 
     public int getNumRows(){

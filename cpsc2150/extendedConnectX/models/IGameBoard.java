@@ -1,7 +1,8 @@
+package cpsc2150.extendedConnectX.models;
 public interface IGameBoard {
-    int NUM_ROWS = 6;
-    int NUM_COLS = 7;
-    int NUM_TO_WIN = 5;
+    public static final int NUM_ROWS = 9;
+    public static final int NUM_COLS = 7;
+    public static final int NUM_TO_WIN = 5;
 
     public int getNumRows();
     public int getNumColumns();
