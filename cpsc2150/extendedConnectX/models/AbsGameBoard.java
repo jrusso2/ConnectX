@@ -1,6 +1,6 @@
 package cpsc2150.extendedConnectX.models;
 
-abstract class AbsGameBoard implements IGameBoard {
+public abstract class AbsGameBoard implements IGameBoard {
     public String toString() {
         StringBuilder str = new StringBuilder();
         // Add column numbers at the top
