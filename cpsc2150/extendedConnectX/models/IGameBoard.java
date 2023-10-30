@@ -31,17 +31,11 @@ public interface IGameBoard {
     int NUM_COLS = 7;
     int NUM_TO_WIN = 5;
 
-    default int getNumRows() {
-        return NUM_ROWS;
-    }
+    int getNumRows();
 
-    default int getNumColumns() {
-        return NUM_COLS;
-    }
+    int getNumColumns();
 
-    default int getNumToWin() {
-        return NUM_TO_WIN;
-    }
+    int getNumToWin();
 
     /**
      * This function is used to check if a column on the gameboard is full
@@ -55,7 +49,11 @@ public interface IGameBoard {
      * (board[8][6] == " ") == true
      * self = #self
      */
-    boolean checkIfFree(int c);
+    default boolean checkIfFree(int c) {
+        BoardPosition topPos = new BoardPosition(NUM_ROWS - 1, c);
+        return whatsAtPos(topPos) == ' ';
+    }
+
 
     /**
      * This is function is used to allow a player to place their token in the lowest available spot in a column
@@ -80,8 +78,17 @@ public interface IGameBoard {
      * checkVertWin = true || checkDiagWin = true]
      * self = #self
      */
-    boolean checkForWin(int c);
-
+    default boolean checkForWin(int c) {
+        for (int r = 0; r < NUM_ROWS; r++) {
+            BoardPosition pos = new BoardPosition(r, c);
+            if (whatsAtPos(pos) != ' ') {
+                return checkHorizWin(pos, whatsAtPos(pos)) ||
+                        checkVertWin(pos, whatsAtPos(pos)) ||
+                        checkDiagWin(pos, whatsAtPos(pos));
+            }
+        }
+        return false;
+    }
 
     /**
      * This function checks if a game has resulted in a tie
@@ -158,7 +165,10 @@ public interface IGameBoard {
      * @post [returns true if player is at pos, returns false if player is not at pos]
      * self = #self
      */
-    boolean isPlayerAtPos(BoardPosition pos, char player);
+    default boolean isPlayerAtPos(BoardPosition pos, char player){
+        // returns true if the value at pos = player
+        return whatsAtPos(pos) == player;
+    }
 
     String toString();
 

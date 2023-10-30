@@ -42,13 +42,20 @@ public class GameBoard extends AbsGameBoard implements IGameBoard {
         }
     }
 
-
     @Override
-    public boolean checkIfFree(int c) {
-        // returns true if the top space in the selected column is empty, else returns false
-        return board[NUM_ROWS - 1][c] == ' ';
+    public int getNumRows() {
+        return NUM_ROWS;
     }
 
+    @Override
+    public int getNumColumns() {
+        return NUM_COLS;
+    }
+
+    @Override
+    public int getNumToWin() {
+        return NUM_TO_WIN;
+    }
 
     @Override
     public void dropToken(char p, int c) {
@@ -62,23 +69,6 @@ public class GameBoard extends AbsGameBoard implements IGameBoard {
         }
     }
 
-
-    @Override
-    public boolean checkForWin(int c) {
-
-        // This block finds the row and value of the last token played, then creates a boardPosition object with that information
-        // so that it can be passed to the checkWin functions
-        int rowOfLastToken = getRowOfLastToken(c);
-        char lastPlayerToken = board[getRowOfLastToken(c)][c];
-        BoardPosition lastPos = new BoardPosition(rowOfLastToken, c);
-
-        // checkForWin returns true if checkHorizWin, checkVertWin, or checkDiagWin returns true
-        return checkHorizWin(lastPos, lastPlayerToken) ||
-                checkVertWin(lastPos, lastPlayerToken) ||
-                checkDiagWin(lastPos, lastPlayerToken);
-    }
-
-
     @Override
     public boolean checkHorizWin(BoardPosition pos, char p) {
 
@@ -86,8 +76,8 @@ public class GameBoard extends AbsGameBoard implements IGameBoard {
         int consecutiveTokens = 0;
 
         // variables to find the lowest and highest non-out-of-bounds columns to check for a win
-        int minCol = Math.max(0, pos.getColumn() - 4);
-        int maxCol = Math.min(pos.getColumn() + 4, NUM_COLS - 1);
+        int minCol = Math.max(0, pos.getColumn() - (NUM_TO_WIN-1));
+        int maxCol = Math.min(pos.getColumn() + (NUM_TO_WIN-1), NUM_COLS - 1);
 
         // This loop iterates through the same row in surrounding columns, incrementing consecutiveTokens if those positions
         // match the player token. If the positions do not match consecutiveTokens is reset to 0. If consecutiveTokens
@@ -96,7 +86,7 @@ public class GameBoard extends AbsGameBoard implements IGameBoard {
             BoardPosition checkPos = new BoardPosition(pos.getRow(), c);
             if (whatsAtPos(checkPos) == p) {
                 consecutiveTokens++;
-                if (consecutiveTokens == 5) {
+                if (consecutiveTokens == NUM_TO_WIN) {
                     return true;
                 }
             } else {
@@ -207,14 +197,6 @@ public class GameBoard extends AbsGameBoard implements IGameBoard {
         //returns what is in the GameBoard at position pos If no marker is there, it returns a blank space char.
         return board[pos.getRow()][pos.getColumn()];
     }
-
-
-    @Override
-    public boolean isPlayerAtPos(BoardPosition pos, char player) {
-        // returns true if the value at pos = player
-        return board[pos.getRow()][pos.getColumn()] == player;
-    }
-
 
     /**
      * This function finds the row that the last token was played to

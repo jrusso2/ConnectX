@@ -57,7 +57,7 @@ public class BoardPosition {
     /**
      * Returns a boolean value checking if the object stored at the position indicated by Row and Column is equal to parameter Object
      *
-     * @param Object the object we are checking to see matches the object indicated by Row and Column
+     * @param obj the object we are checking to see matches the object indicated by Row and Column
      * @return boolean (is object stored at position equal to Object)
      * @pre none
      * @post equals = boolean (is object stored at position equal to Object) And Row = #Row AND Column = #Column
