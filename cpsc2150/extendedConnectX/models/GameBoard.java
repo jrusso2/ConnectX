@@ -71,30 +71,34 @@ public class GameBoard extends AbsGameBoard implements IGameBoard {
 
     @Override
     public boolean checkHorizWin(BoardPosition pos, char p) {
+        /*checks to see if the last token placed (which was placed in position pos by player p) resulted in Num_TO_WIN in a row
+        horizontally. Returns true if it does, otherwise false*/
 
-        // variable to track the number of consecutive same-value tokens. If consecutive tokens = 5, the win condition is met
-        int consecutiveTokens = 0;
+        int row = NUM_ROWS - 1;
+        while (board[row][pos.getColumn()] == ' ') {
+            row--;
+        }
 
-        // variables to find the lowest and highest non-out-of-bounds columns to check for a win
-        int minCol = Math.max(0, pos.getColumn() - (NUM_TO_WIN-1));
-        int maxCol = Math.min(pos.getColumn() + (NUM_TO_WIN-1), NUM_COLS - 1);
+        BoardPosition checkHoriz;
+        //check for all valid configurations that include last played token where there could be NUM_TO_WIN in a row horizontally
+        for (int x = 0; x < NUM_TO_WIN; x++) {
+            if ((pos.getColumn() - x) >= 0 && pos.getColumn() + ((NUM_TO_WIN - 1) - x) < NUM_COLS){
+                
+                //return true if any of the possible legal configurations result in NUM_TO_WIN in a row horizontally
+                for (int j = 0; j < NUM_TO_WIN; j++) {
+                    checkHoriz = new BoardPosition((row), ((pos.getColumn() - x) + j));
 
-        // This loop iterates through the same row in surrounding columns, incrementing consecutiveTokens if those positions
-        // match the player token. If the positions do not match consecutiveTokens is reset to 0. If consecutiveTokens
-        // reaches 5 the win condition is met and checkHorizWin returns true
-        for (int c = minCol; c < maxCol; c++) {
-            BoardPosition checkPos = new BoardPosition(pos.getRow(), c);
-            if (whatsAtPos(checkPos) == p) {
-                consecutiveTokens++;
-                if (consecutiveTokens == NUM_TO_WIN) {
-                    return true;
+                        if (whatsAtPos(checkHoriz) == board[row][pos.getColumn()]) {
+                        if (j == NUM_TO_WIN - 1) {
+                            return true;
+                        }
+                    } 
+                        else {break;}
                 }
-            } else {
-                consecutiveTokens = 0;
             }
         }
-        // if consecutiveTokens never reaches 5, checkHorizWin returns false
-        return false;
+    //else return false
+      return false;
     }
 
 
@@ -129,7 +133,7 @@ public class GameBoard extends AbsGameBoard implements IGameBoard {
 
     @Override
     public boolean checkDiagWin(BoardPosition pos, char p) {
-        /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
+        /*checks to see if the last token placed (which was placed in position pos by player p) resulted in NUM_TO_WIN in a row
         diagonally. Returns true if it does, otherwise false Note: there are two diagonals to check*/
 
         int row = NUM_ROWS - 1;
