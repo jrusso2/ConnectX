@@ -31,6 +31,9 @@ public class GameScreen {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int numPlayers;
+        int numRows;
+        int numCols;
+        int numToWin;
         Set<Character> takenTokens = new HashSet<>();
 
         // Ask for number of players
@@ -60,14 +63,30 @@ public class GameScreen {
             playerTokens[i] = token;
         }
 
+        do{
         System.out.print("How many rows should be on the board? ");
-        int numRows = scanner.nextInt();
+        numRows = scanner.nextInt();
+        if (numRows > 100){System.out.println("Number of rows cannot exceed 100");}
+        else if (numRows < 3) {System.out.println("Number of rows cannot be less than 3");}
+        } while (numRows > 100 || numRows < 3);
 
+        do{
         System.out.print("How many columns should be on the board? ");
-        int numCols = scanner.nextInt();
+        numCols = scanner.nextInt();
+        if (numCols > 100){System.out.println("Number of columns cannot exceed 100");}
+        else if (numCols < 3) {System.out.println("Number of columns cannot be less than 3");}
+        } while (numCols > 100 || numCols < 3);
 
+        do{
         System.out.print("How many in a row to win? ");
-        int numToWin = scanner.nextInt();
+        numToWin = scanner.nextInt();
+        if (numToWin < 3){System.out.println("Number to win cannot be less than 3");}
+        else if (numToWin > 25){System.out.println("Number to win cannot be more than 25");}
+        else if (numToWin > numCols && numToWin > numRows){System.out.println(
+        "Number to win cannot be greater than the number of rows or the number of columns");}
+        else if (numToWin > numCols){System.out.println("Number to win cannot be greater than number of columns");}
+        else if (numToWin > numRows){System.out.println("Number to win cannot be greater than number of rows");}
+        } while (numToWin < 3 || numToWin > numCols || numToWin > numRows || numToWin > 25);
 
         char gameType;
         do {
