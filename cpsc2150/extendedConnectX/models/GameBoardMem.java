@@ -10,37 +10,50 @@ import java.util.Map;
  * The key of the map is a Character representing the player.
  * The value associated with each player is a List of BoardPositions that the player occupies on the board.
  */
-public class GameBoardMem extends AbsGameBoard implements IGameBoard {
+public class GameBoardMem extends AbsGameBoard{
 
     // Map to represent the game board
     private Map<Character, List<BoardPosition>> board;
 
-    private final int numRows;
-    private final int numCols;
-    private final int numToWin;
+    private int NUM_ROWS;
+    private int NUM_COLS;
+    private int NUM_TO_WIN;
 
     /**
      * Constructor for GameBoardMem.
      * Initializes an empty board.
      */
     public GameBoardMem(int rows, int cols, int win) {
+        setNumRows(rows);
+        setNumCol(cols);
+        setNumToWin(win);
         board = new HashMap<>();
-        this.numRows = rows;
-        this.numCols = cols;
-        this.numToWin = win;
     }
 
-    @Override
+    public void setNumRows(int rows) {
+        NUM_ROWS=rows;
+    }
+
+
+    public void setNumCol(int col) {
+        NUM_COLS=col;
+    }
+
+
+    public void setNumToWin(int win) {
+        NUM_TO_WIN=win;
+    }
+
     public int getNumRows() {
         return NUM_ROWS;
     }
 
-    @Override
+
     public int getNumColumns() {
         return NUM_COLS;
     }
 
-    @Override
+
     public int getNumToWin() {
         return NUM_TO_WIN;
     }
@@ -60,20 +73,14 @@ public class GameBoardMem extends AbsGameBoard implements IGameBoard {
 
     @Override
     public void dropToken(char p, int c) {
-        // If the top position in the column is free, then the column is not full.
-        if (!checkIfFree(c)) {
-            return;
-        }
-
-        // Find the first free position from the bottom of the column.
+        // Create a new BoardPosition for the token
         int row = getNumRows() - 1;
-        while (whatsAtPos(new BoardPosition(row, c)) != ' ' && row > 0) {
+        while (isPlayerAtPos(new BoardPosition(row, c), p) && row > 0) {
             row--;
         }
-
         BoardPosition newPos = new BoardPosition(row, c);
 
-        // Add the position to the player's list in the map.
+        // Add the position to the player's list in the map
         if (board.containsKey(p)) {
             board.get(p).add(newPos);
         } else {
@@ -82,7 +89,6 @@ public class GameBoardMem extends AbsGameBoard implements IGameBoard {
             board.put(p, newList);
         }
     }
-
 
     @Override
     public char whatsAtPos(BoardPosition pos) {
