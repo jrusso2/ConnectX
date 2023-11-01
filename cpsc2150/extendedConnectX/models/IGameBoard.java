@@ -118,7 +118,33 @@ public interface IGameBoard {
      * @post [returns true if last placed token is the last to make up the 5 consecutive same tokens horizontally]
      * self = #self
      */
-    boolean checkHorizWin(BoardPosition pos, char p);
+    default boolean checkHorizWin(BoardPosition pos, char p) {
+        int row = pos.getRow();
+        int col = pos.getColumn();
+
+        BoardPosition checkHoriz;
+
+        // Check for all valid configurations that include the last placed token where there could be NUM_TO_WIN in a row horizontally
+        for (int x = 0; x < NUM_TO_WIN; x++) {
+            if ((col - x) >= 0 && col + ((NUM_TO_WIN - 1) - x) < getNumColumns()) {
+
+                // Return true if any of the possible legal configurations result in NUM_TO_WIN in a row horizontally
+                for (int j = 0; j < NUM_TO_WIN; j++) {
+                    checkHoriz = new BoardPosition(row, (col - x) + j);
+
+                    if (whatsAtPos(checkHoriz) == p) {
+                        if (j == NUM_TO_WIN - 1) {
+                            return true;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        // Else return false
+        return false;
+    }
 
     /**
      * This function checks to see if a game has been win with 5 matching player tokens in a row vertically
@@ -130,7 +156,33 @@ public interface IGameBoard {
      * @post [returns true if last placed token is the last to make up the 5 consecutive same tokens vertically]
      * self = #self
      */
-    boolean checkVertWin(BoardPosition pos, char p);
+    default boolean checkVertWin(BoardPosition pos, char p) {
+        int row = pos.getRow();
+        int col = pos.getColumn();
+
+        BoardPosition checkVert;
+
+        // Check for all valid configurations that include the last placed token where there could be NUM_TO_WIN in a row vertically
+        for (int x = 0; x < NUM_TO_WIN; x++) {
+            if ((row - x) >= 0 && row + ((NUM_TO_WIN - 1) - x) < NUM_ROWS) {
+
+                // Return true if any of the possible legal configurations result in NUM_TO_WIN in a row vertically
+                for (int j = 0; j < NUM_TO_WIN; j++) {
+                    checkVert = new BoardPosition((row - x) + j, col);
+
+                    if (whatsAtPos(checkVert) == p) {
+                        if (j == NUM_TO_WIN - 1) {
+                            return true;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        // Else return false
+        return false;
+    }
 
     /**
      * This function checks to see if a game has been win with 5 matching player tokens in a row diagonally
@@ -142,7 +194,52 @@ public interface IGameBoard {
      * @post [returns true if last placed token is the last to make up the 5 consecutive same tokens diagonally]
      * self = #self
      */
-    boolean checkDiagWin(BoardPosition pos, char p);
+    default boolean checkDiagWin(BoardPosition pos, char p) {
+        int row = pos.getRow();
+        int col = pos.getColumn();
+
+        BoardPosition checkDiag;
+
+        // Check for diagonal win with left end lower than right end
+        for (int x = 0; x < NUM_TO_WIN; x++) {
+            if ((row - x) >= 0 && row + ((NUM_TO_WIN - 1) - x) < getNumRows() &&
+                    (col - x) >= 0 && col + ((NUM_TO_WIN - 1) - x) < getNumColumns()) {
+
+                for (int j = 0; j < NUM_TO_WIN; j++) {
+                    checkDiag = new BoardPosition((row - x) + j, (col - x) + j);
+
+                    if (whatsAtPos(checkDiag) == p) {
+                        if (j == NUM_TO_WIN - 1) {
+                            return true;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Check for diagonal win with right end lower than left end
+        for (int x = 0; x < NUM_TO_WIN; x++) {
+            if ((row + x) < getNumRows() && row - ((NUM_TO_WIN - 1) - x) >= 0 &&
+                    (col - x) >= 0 && col + ((NUM_TO_WIN - 1) - x) < getNumColumns()) {
+
+                for (int j = 0; j < NUM_TO_WIN; j++) {
+                    checkDiag = new BoardPosition((row + x) - j, (col - x) + j);
+
+                    if (whatsAtPos(checkDiag) == p) {
+                        if (j == NUM_TO_WIN - 1) {
+                            return true;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 
     /**
      * This function returns what token is at a specific position on the gameboard
@@ -165,7 +262,7 @@ public interface IGameBoard {
      * @post [returns true if player is at pos, returns false if player is not at pos]
      * self = #self
      */
-    default boolean isPlayerAtPos(BoardPosition pos, char player){
+    default boolean isPlayerAtPos(BoardPosition pos, char player) {
         // returns true if the value at pos = player
         return whatsAtPos(pos) == player;
     }
