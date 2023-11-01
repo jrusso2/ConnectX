@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import cpsc2150.extendedConnectX.models.IGameBoard;
 import cpsc2150.extendedConnectX.models.GameBoard;
+import cpsc2150.extendedConnectX.models.GameBoardMem;
 
 
 /*
@@ -13,6 +14,9 @@ Evan Schwartz - eschwa2
 Joseph Becker - BoiledPNutEnjoyer
 */
 
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class GameScreen {
 
@@ -26,69 +30,78 @@ public class GameScreen {
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        char currentPlayer;
+        int numPlayers;
+        Set<Character> takenTokens = new HashSet<>();
 
-// Main game loop, continues until the user decides not to play again
-        while (true) {
-            IGameBoard gameBoard = new GameBoard();  // Initialize a new game board
-            currentPlayer = 'X';  // Set the starting player to 'X'
-
-            // Loop for the ongoing game, continues until a win or tie is detected
-            while (true) {
-                System.out.println(gameBoard);  // Display the current state of the game board
-
-                int chosenColumn = -1;
-
-                // Input loop, continues until the player provides a valid column
-                while (true) {
-                    System.out.println("Player " + currentPlayer + ", what column do you want to place your marker in?");
-                    chosenColumn = scanner.nextInt();  // Read the player's chosen column
-
-                    // Validate the chosen column and provide feedback if invalid
-                    if (chosenColumn < 0) {
-                        System.out.println("Column cannot be less than 0");
-                    } else if (chosenColumn >= gameBoard.getNumColumns()) {
-                        System.out.println("Column cannot be greater than " + (gameBoard.getNumColumns() - 1));
-                    } else if (!gameBoard.checkIfFree(chosenColumn)) {
-                        System.out.println("Column is full");
-                    } else {
-                        break;  // Exit the input loop if the chosen column is valid
-                    }
-                }
-
-                // Place the player's token in the chosen column
-                gameBoard.dropToken(currentPlayer, chosenColumn);
-
-                // Check for a win or tie, and display the appropriate message
-                if (gameBoard.checkForWin(chosenColumn)) {
-                    System.out.println(gameBoard);
-                    System.out.println("Player " + currentPlayer + " wins!");
-                    break;  // Exit the game loop
-                }
-
-                if (gameBoard.checkTie()) {
-                    System.out.println(gameBoard);
-                    System.out.println("The game is a tie!");
-                    break;  // Exit the game loop
-                }
-
-                // Switch to the other player for the next turn
-                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        // Ask for number of players
+        do {
+            System.out.print("How many players? ");
+            numPlayers = scanner.nextInt();
+            if (numPlayers > 10) {
+                System.out.println("Must be 10 players or fewer");
+            } else if (numPlayers < 2) {
+                System.out.println("Must be at least 2 players");
             }
+        } while (numPlayers > 10 || numPlayers < 2);
 
-            // Post-game loop, asks the user if they want to play again
-            while (true) {
-                System.out.println("Would you like to play again? Y/N");
-                char playAgain = scanner.next().charAt(0);  // Read the user's response
+        char[] playerTokens = new char[numPlayers];
 
-                // Handle the user's response and either restart the game or exit the program
-                if (playAgain == 'N' || playAgain == 'n') {
-                    scanner.close();  // Close the scanner to prevent resource leaks
-                    return;  // Exit the program
-                } else if (playAgain == 'Y' || playAgain == 'y') {
-                    break;  // Exit the post-game loop and start a new game
+        // Ask for player tokens
+        for (int i = 0; i < numPlayers; i++) {
+            char token;
+            do {
+                System.out.print("Enter the character to represent player " + (i + 1) + " ");
+                token = scanner.next().charAt(0);
+                if (takenTokens.contains(token)) {
+                    System.out.println(token + " is already taken as a player token!");
                 }
+            } while (takenTokens.contains(token));
+            takenTokens.add(token);
+            playerTokens[i] = token;
+        }
+
+        System.out.print("How many rows should be on the board? ");
+        int numRows = scanner.nextInt();
+
+        System.out.print("How many columns should be on the board? ");
+        int numCols = scanner.nextInt();
+
+        System.out.print("How many in a row to win? ");
+        int numToWin = scanner.nextInt();
+
+        char gameType;
+        do {
+            System.out.print("Would you like a Fast Game (F/f) or a Memory Efficient Game (M/m)? ");
+            gameType = scanner.next().charAt(0);
+        } while (gameType != 'F' && gameType != 'f' && gameType != 'M' && gameType != 'm');
+
+        IGameBoard board;
+        if (gameType == 'F' || gameType == 'f') {
+            board = new GameBoard();
+        } else {
+            board = new GameBoardMem(numRows, numCols, numToWin);
+        }
+
+        char currentPlayerToken = playerTokens[0];
+        int currentPlayerIndex = 0;
+        boolean gameWon = false;
+
+        while (!gameWon) {
+            System.out.println(board);
+            System.out.print("Player " + currentPlayerToken + ", what column do you want to place your marker in? ");
+            int col = scanner.nextInt();
+            board.dropToken(currentPlayerToken, col);
+            if (board.checkForWin(col)) {
+                gameWon = true;
+                System.out.println("Player " + currentPlayerToken + " wins!");
+            } else if (board.checkTie()) {
+                gameWon = true;
+                System.out.println("It's a tie!");
+            } else {
+                currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
+                currentPlayerToken = playerTokens[currentPlayerIndex];
             }
         }
+        scanner.close();
     }
 }
