@@ -198,47 +198,43 @@ public interface IGameBoard {
         int row = pos.getRow();
         int col = pos.getColumn();
 
-        BoardPosition checkDiag;
-
-        // Check for diagonal win with left end lower than right end
-        for (int x = 0; x < NUM_TO_WIN; x++) {
-            if ((row - x) >= 0 && row + ((NUM_TO_WIN - 1) - x) < getNumRows() &&
-                    (col - x) >= 0 && col + ((NUM_TO_WIN - 1) - x) < getNumColumns()) {
-
-                for (int j = 0; j < NUM_TO_WIN; j++) {
-                    checkDiag = new BoardPosition((row - x) + j, (col - x) + j);
-
-                    if (whatsAtPos(checkDiag) == p) {
-                        if (j == NUM_TO_WIN - 1) {
-                            return true;
-                        }
-                    } else {
-                        break;
-                    }
-                }
+        // Check for diagonal win with left end lower than right end (bottom-left to top-right)
+        int count = 0;
+        for (int i = 0; i < NUM_TO_WIN; i++) {
+            if ((row - i) >= 0 && (col - i) >= 0 && whatsAtPos(new BoardPosition(row - i, col - i)) == p) {
+                count++;
+            } else {
+                break;
             }
         }
-
-        // Check for diagonal win with right end lower than left end
-        for (int x = 0; x < NUM_TO_WIN; x++) {
-            if ((row + x) < getNumRows() && row - ((NUM_TO_WIN - 1) - x) >= 0 &&
-                    (col - x) >= 0 && col + ((NUM_TO_WIN - 1) - x) < getNumColumns()) {
-
-                for (int j = 0; j < NUM_TO_WIN; j++) {
-                    checkDiag = new BoardPosition((row + x) - j, (col - x) + j);
-
-                    if (whatsAtPos(checkDiag) == p) {
-                        if (j == NUM_TO_WIN - 1) {
-                            return true;
-                        }
-                    } else {
-                        break;
-                    }
-                }
+        for (int i = 1; i < NUM_TO_WIN; i++) {
+            if ((row + i) < getNumRows() && (col + i) < getNumColumns() && whatsAtPos(new BoardPosition(row + i, col + i)) == p) {
+                count++;
+            } else {
+                break;
             }
         }
+        if (count >= NUM_TO_WIN) return true;
 
-        return false;
+        // Reset count for the next check
+        count = 0;
+
+        // Check for diagonal win with right end lower than left end (top-left to bottom-right)
+        for (int i = 0; i < NUM_TO_WIN; i++) {
+            if ((row + i) < getNumRows() && (col - i) >= 0 && whatsAtPos(new BoardPosition(row + i, col - i)) == p) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        for (int i = 1; i < NUM_TO_WIN; i++) {
+            if ((row - i) >= 0 && (col + i) < getNumColumns() && whatsAtPos(new BoardPosition(row - i, col + i)) == p) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        return count >= NUM_TO_WIN;
     }
 
     /**
