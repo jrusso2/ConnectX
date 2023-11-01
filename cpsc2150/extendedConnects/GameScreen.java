@@ -34,6 +34,7 @@ public class GameScreen {
         int numRows;
         int numCols;
         int numToWin;
+        char gameType;
         Set<Character> takenTokens = new HashSet<>();
 
         // Ask for number of players
@@ -88,7 +89,7 @@ public class GameScreen {
         else if (numToWin > numRows){System.out.println("Number to win cannot be greater than number of rows");}
         } while (numToWin < 3 || numToWin > numCols || numToWin > numRows || numToWin > 25);
 
-        char gameType;
+
         do {
             System.out.print("Would you like a Fast Game (F/f) or a Memory Efficient Game (M/m)? ");
             gameType = scanner.next().charAt(0);
@@ -96,7 +97,7 @@ public class GameScreen {
 
         IGameBoard board;
         if (gameType == 'F' || gameType == 'f') {
-            board = new GameBoard();
+            board = new GameBoard(numRows, numCols, numToWin);
         } else {
             board = new GameBoardMem(numRows, numCols, numToWin);
         }

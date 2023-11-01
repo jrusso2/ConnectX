@@ -7,21 +7,23 @@ Evan Schwartz - eschwa2
 Joseph Becker - BoiledPNutEnjoyer
 */
 
-public class GameBoard extends AbsGameBoard implements IGameBoard {
+public class GameBoard extends AbsGameBoard{
     /**
-     * This class is for creating a gameboard to play connect 4
+     * This class is for creating a gameboard to play connect X
      * Correspondence The game board = this.board
      * Correspondence The number of rows = IGameBoard.NUM_ROWS
      * Correspondence The number of columns = IGameBoard.NUM_COLS
      * Correspondence The number of tokens in a line needed to win = IGameBoard.NUM_TO_WIN
      *
      * @invariant 0 < c <= NUM_COLS
-     * @invariant NUM_TO_WIN = 5
      * @invariant NUM_TO_WIN <= NUM_ROWS
      * @invariant NUM_TO_WIN <= NUM_COLS
-     * @invariant [All tokens are either 'X', 'O', or ' ' (space character)]
+     * @invariant [All tokens are either those entered by user input or ' ' (space character)]
      */
     private final char[][] board;
+    private int NUM_ROWS;
+    private int NUM_COLS;
+    private int NUM_TO_WIN;
 
 
     /**
@@ -30,29 +32,48 @@ public class GameBoard extends AbsGameBoard implements IGameBoard {
      * @pre none
      * @post [each position in GameBoard array must be empty, board[0][0] is the bottom left, board[8][6] is the top right]
      */
-    public GameBoard() {
-        // Initialize the board array with NUM_ROWS and NUM_COLS from the IGameBoard interface
-        board = new char[IGameBoard.NUM_ROWS][IGameBoard.NUM_COLS];
+
+        //Initialize the board array from user input
+    public GameBoard(int rows, int cols, int win){
+        setNumRows(rows);
+        setNumCol(cols);
+        setNumToWin(win);
+      board = new char[getNumRows()][getNumColumns()];
 
         // Loop through each position in the board and set it to ' '
-        for (int i = 0; i < IGameBoard.NUM_ROWS; i++) {
-            for (int j = 0; j < IGameBoard.NUM_COLS; j++) {
+        for (int i = 0; i < getNumRows(); i++) {
+            for (int j = 0; j < getNumColumns(); j++) {
                 board[i][j] = ' ';
             }
         }
     }
 
-    @Override
+  
+    public void setNumRows(int rows) {
+        NUM_ROWS=rows;
+    }
+
+
+    public void setNumCol(int col) {
+        NUM_COLS=col;
+    }
+
+
+    public void setNumToWin(int win) {
+        NUM_TO_WIN=win;
+    }
+
+ 
     public int getNumRows() {
         return NUM_ROWS;
     }
 
-    @Override
+
     public int getNumColumns() {
         return NUM_COLS;
     }
 
-    @Override
+
     public int getNumToWin() {
         return NUM_TO_WIN;
     }

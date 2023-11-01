@@ -10,37 +10,50 @@ import java.util.Map;
  * The key of the map is a Character representing the player.
  * The value associated with each player is a List of BoardPositions that the player occupies on the board.
  */
-public class GameBoardMem extends AbsGameBoard implements IGameBoard {
+public class GameBoardMem extends AbsGameBoard{
 
     // Map to represent the game board
     private Map<Character, List<BoardPosition>> board;
 
-    private final int numRows;
-    private final int numCols;
-    private final int numToWin;
+    private int NUM_ROWS;
+    private int NUM_COLS;
+    private int NUM_TO_WIN;
 
     /**
      * Constructor for GameBoardMem.
      * Initializes an empty board.
      */
     public GameBoardMem(int rows, int cols, int win) {
+        setNumRows(rows);
+        setNumCol(cols);
+        setNumToWin(win);
         board = new HashMap<>();
-        this.numRows = rows;
-        this.numCols = cols;
-        this.numToWin = win;
     }
 
-    @Override
+    public void setNumRows(int rows) {
+        NUM_ROWS=rows;
+    }
+
+
+    public void setNumCol(int col) {
+        NUM_COLS=col;
+    }
+
+
+    public void setNumToWin(int win) {
+        NUM_TO_WIN=win;
+    }
+
     public int getNumRows() {
         return NUM_ROWS;
     }
 
-    @Override
+
     public int getNumColumns() {
         return NUM_COLS;
     }
 
-    @Override
+
     public int getNumToWin() {
         return NUM_TO_WIN;
     }
