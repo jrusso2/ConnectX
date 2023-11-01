@@ -199,8 +199,8 @@ public interface IGameBoard {
         int col = pos.getColumn();
 
         // Check for diagonal win with left end lower than right end (bottom-left to top-right)
-        int count = 0;
-        for (int i = 0; i < NUM_TO_WIN; i++) {
+        int count = 1;
+        for (int i = 1; i < NUM_TO_WIN; i++) {
             if ((row - i) >= 0 && (col - i) >= 0 && whatsAtPos(new BoardPosition(row - i, col - i)) == p) {
                 count++;
             } else {
@@ -217,10 +217,10 @@ public interface IGameBoard {
         if (count >= NUM_TO_WIN) return true;
 
         // Reset count for the next check
-        count = 0;
+        count = 1;
 
         // Check for diagonal win with right end lower than left end (top-left to bottom-right)
-        for (int i = 0; i < NUM_TO_WIN; i++) {
+        for (int i = 1; i < NUM_TO_WIN; i++) {
             if ((row + i) < getNumRows() && (col - i) >= 0 && whatsAtPos(new BoardPosition(row + i, col - i)) == p) {
                 count++;
             } else {
