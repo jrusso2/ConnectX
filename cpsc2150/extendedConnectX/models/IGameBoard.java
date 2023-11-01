@@ -27,12 +27,9 @@ package cpsc2150.extendedConnectX.models;
  * [A token is placed in the lowest available row of a given column]
  */
 public interface IGameBoard {
-
-    void setNumRows(int rows);
-
-    void setNumCol(int cols);
-
-    void setNumToWin(int num);
+    int NUM_ROWS = 9;
+    int NUM_COLS = 7;
+    int NUM_TO_WIN = 5;
 
     int getNumRows();
 
@@ -53,7 +50,7 @@ public interface IGameBoard {
      * self = #self
      */
     default boolean checkIfFree(int c) {
-        BoardPosition topPos = new BoardPosition(getNumRows() - 1, c);
+        BoardPosition topPos = new BoardPosition(NUM_ROWS - 1, c);
         return whatsAtPos(topPos) == ' ';
     }
 
@@ -82,7 +79,7 @@ public interface IGameBoard {
      * self = #self
      */
     default boolean checkForWin(int c) {
-        for (int r = 0; r < getNumRows(); r++) {
+        for (int r = 0; r < NUM_ROWS; r++) {
             BoardPosition pos = new BoardPosition(r, c);
             if (whatsAtPos(pos) != ' ') {
                 return checkHorizWin(pos, whatsAtPos(pos)) ||
@@ -103,7 +100,7 @@ public interface IGameBoard {
      * self = #self
      */
     default boolean checkTie() {
-        for (int c = 0; c < getNumColumns(); c++) {
+        for (int c = 0; c < NUM_COLS; c++) {
             if (checkIfFree(c)) {
                 return false;
             }
@@ -128,15 +125,15 @@ public interface IGameBoard {
         BoardPosition checkHoriz;
 
         // Check for all valid configurations that include the last placed token where there could be NUM_TO_WIN in a row horizontally
-        for (int x = 0; x < getNumToWin(); x++) {
-            if ((col - x) >= 0 && col + ((getNumToWin() - 1) - x) < getNumColumns()) {
+        for (int x = 0; x < NUM_TO_WIN; x++) {
+            if ((col - x) >= 0 && col + ((NUM_TO_WIN - 1) - x) < getNumColumns()) {
 
                 // Return true if any of the possible legal configurations result in NUM_TO_WIN in a row horizontally
-                for (int j = 0; j < getNumToWin(); j++) {
+                for (int j = 0; j < NUM_TO_WIN; j++) {
                     checkHoriz = new BoardPosition(row, (col - x) + j);
 
                     if (whatsAtPos(checkHoriz) == p) {
-                        if (j == getNumToWin() - 1) {
+                        if (j == NUM_TO_WIN - 1) {
                             return true;
                         }
                     } else {
@@ -166,15 +163,15 @@ public interface IGameBoard {
         BoardPosition checkVert;
 
         // Check for all valid configurations that include the last placed token where there could be NUM_TO_WIN in a row vertically
-        for (int x = 0; x < getNumToWin(); x++) {
-            if ((row - x) >= 0 && row + ((getNumToWin() - 1) - x) < getNumRows()) {
+        for (int x = 0; x < NUM_TO_WIN; x++) {
+            if ((row - x) >= 0 && row + ((NUM_TO_WIN - 1) - x) < NUM_ROWS) {
 
                 // Return true if any of the possible legal configurations result in NUM_TO_WIN in a row vertically
-                for (int j = 0; j < getNumToWin(); j++) {
+                for (int j = 0; j < NUM_TO_WIN; j++) {
                     checkVert = new BoardPosition((row - x) + j, col);
 
                     if (whatsAtPos(checkVert) == p) {
-                        if (j == getNumToWin() - 1) {
+                        if (j == NUM_TO_WIN - 1) {
                             return true;
                         }
                     } else {
@@ -203,41 +200,41 @@ public interface IGameBoard {
 
         // Check for diagonal win with left end lower than right end (bottom-left to top-right)
         int count = 1;
-        for (int i = 1; i < getNumToWin(); i++) {
+        for (int i = 1; i < NUM_TO_WIN; i++) {
             if ((row - i) >= 0 && (col - i) >= 0 && whatsAtPos(new BoardPosition(row - i, col - i)) == p) {
                 count++;
             } else {
                 break;
             }
         }
-        for (int i = 1; i < getNumToWin(); i++) {
+        for (int i = 1; i < NUM_TO_WIN; i++) {
             if ((row + i) < getNumRows() && (col + i) < getNumColumns() && whatsAtPos(new BoardPosition(row + i, col + i)) == p) {
                 count++;
             } else {
                 break;
             }
         }
-        if (count >= getNumToWin()) return true;
+        if (count >= NUM_TO_WIN) return true;
 
         // Reset count for the next check
         count = 1;
 
         // Check for diagonal win with right end lower than left end (top-left to bottom-right)
-        for (int i = 1; i < getNumToWin(); i++) {
+        for (int i = 1; i < NUM_TO_WIN; i++) {
             if ((row + i) < getNumRows() && (col - i) >= 0 && whatsAtPos(new BoardPosition(row + i, col - i)) == p) {
                 count++;
             } else {
                 break;
             }
         }
-        for (int i = 1; i < getNumToWin(); i++) {
+        for (int i = 1; i < NUM_TO_WIN; i++) {
             if ((row - i) >= 0 && (col + i) < getNumColumns() && whatsAtPos(new BoardPosition(row - i, col + i)) == p) {
                 count++;
             } else {
                 break;
             }
         }
-        return count >= getNumToWin();
+        return count >= NUM_TO_WIN;
     }
 
     /**
