@@ -2,23 +2,21 @@ package cpsc2150.extendedConnectX.models;
 
 public abstract class AbsGameBoard implements IGameBoard {
     public String toString() {
-        StringBuilder str = new StringBuilder();
-        // Add column numbers at the top
-        str.append("|");
+        StringBuilder sb = new StringBuilder();
+        sb.append("|");
         for (int col = 0; col < getNumColumns(); col++) {
-            str.append(col).append("|");
+            sb.append(" ").append(col).append("|");
         }
-        str.append("\n");
-
-        // Add each row of the board
-        for (int row = getNumRows() - 1; row >= 0; row--) {
-            str.append("|");
+        sb.append("\n");
+        for (int row = 0; row < getNumRows(); row++) {
+            sb.append("|");
             for (int col = 0; col < getNumColumns(); col++) {
-                BoardPosition pos = new BoardPosition(row, col);
-                str.append(whatsAtPos(pos)).append("|");
+                BoardPosition position = new BoardPosition(row, col); // Create a BoardPosition object
+                char content = whatsAtPos(position); // Get the content using the method with BoardPosition
+                sb.append(" ").append(content).append(" |");
             }
-            str.append("\n");
+            sb.append("\n");
         }
-        return str.toString();
+        return sb.toString();
     }
 }
