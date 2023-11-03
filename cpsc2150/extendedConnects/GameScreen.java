@@ -18,8 +18,8 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-public class GameScreen {
 
+public class GameScreen {
 
     /**
      * The class that the user interacts with. Provides all I/O
@@ -28,100 +28,142 @@ public class GameScreen {
      * @pre none
      * @post [the game is executed]
      */
+    private static final int MIN_PLAYERS = 2;
+    private static final int MAX_PLAYERS = 10;
+    private static final int MIN_ROWS = 3;
+
+    private static final int MAX_ROWS = 100;
+    private static final int MIN_COLS = 3;
+
+    private static final int MAX_COLS = 100;
+    private static final int MIN_NUM_TO_WIN = 3;
+
+    private static final int MAX_NUM_TO_WIN = 25;
+
+
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int numPlayers;
-        int numRows;
-        int numCols;
-        int numToWin;
-        char gameType;
-        Set<Character> takenTokens = new HashSet<>();
+        boolean playAgain;
 
-        // Ask for number of players
         do {
-            System.out.print("How many players? ");
-            numPlayers = scanner.nextInt();
-            if (numPlayers > 10) {
-                System.out.println("Must be 10 players or fewer");
-            } else if (numPlayers < 2) {
-                System.out.println("Must be at least 2 players");
-            }
-        } while (numPlayers > 10 || numPlayers < 2);
-
-        char[] playerTokens = new char[numPlayers];
-
-        // Ask for player tokens
-        for (int i = 0; i < numPlayers; i++) {
-            char token;
-            do {
-                System.out.print("Enter the character to represent player " + (i + 1) + " ");
-                token = scanner.next().charAt(0);
-                if (takenTokens.contains(token)) {
-                    System.out.println(token + " is already taken as a player token!");
+            int numPlayers = 0;
+            while (numPlayers < MIN_PLAYERS || numPlayers > MAX_PLAYERS) {
+                System.out.println("How many players?");
+                numPlayers = Integer.parseInt(scanner.nextLine());
+                if (numPlayers < MIN_PLAYERS) {
+                    System.out.println("Must be at least " + MIN_PLAYERS + " players");
+                } else if (numPlayers > MAX_PLAYERS) {
+                    System.out.println("Must be " + MAX_PLAYERS + " players or fewer");
                 }
-            } while (takenTokens.contains(token));
-            takenTokens.add(token);
-            playerTokens[i] = token;
-        }
-
-        do{
-        System.out.print("How many rows should be on the board? ");
-        numRows = scanner.nextInt();
-        if (numRows > 100){System.out.println("Number of rows cannot exceed 100");}
-        else if (numRows < 3) {System.out.println("Number of rows cannot be less than 3");}
-        } while (numRows > 100 || numRows < 3);
-
-        do{
-        System.out.print("How many columns should be on the board? ");
-        numCols = scanner.nextInt();
-        if (numCols > 100){System.out.println("Number of columns cannot exceed 100");}
-        else if (numCols < 3) {System.out.println("Number of columns cannot be less than 3");}
-        } while (numCols > 100 || numCols < 3);
-
-        do{
-        System.out.print("How many in a row to win? ");
-        numToWin = scanner.nextInt();
-        if (numToWin < 3){System.out.println("Number to win cannot be less than 3");}
-        else if (numToWin > 25){System.out.println("Number to win cannot be more than 25");}
-        else if (numToWin > numCols && numToWin > numRows){System.out.println(
-        "Number to win cannot be greater than the number of rows or the number of columns");}
-        else if (numToWin > numCols){System.out.println("Number to win cannot be greater than number of columns");}
-        else if (numToWin > numRows){System.out.println("Number to win cannot be greater than number of rows");}
-        } while (numToWin < 3 || numToWin > numCols || numToWin > numRows || numToWin > 25);
-
-
-        do {
-            System.out.print("Would you like a Fast Game (F/f) or a Memory Efficient Game (M/m)? ");
-            gameType = scanner.next().charAt(0);
-        } while (gameType != 'F' && gameType != 'f' && gameType != 'M' && gameType != 'm');
-
-        IGameBoard board;
-        if (gameType == 'F' || gameType == 'f') {
-            board = new GameBoard(numRows, numCols, numToWin);
-        } else {
-            board = new GameBoardMem(numRows, numCols, numToWin);
-        }
-
-        char currentPlayerToken = playerTokens[0];
-        int currentPlayerIndex = 0;
-        boolean gameWon = false;
-
-        while (!gameWon) {
-            System.out.println(board);
-            System.out.print("Player " + currentPlayerToken + ", what column do you want to place your marker in? ");
-            int col = scanner.nextInt();
-            board.dropToken(currentPlayerToken, col);
-            if (board.checkForWin(col)) {
-                gameWon = true;
-                System.out.println("Player " + currentPlayerToken + " wins!");
-            } else if (board.checkTie()) {
-                gameWon = true;
-                System.out.println("It's a tie!");
-            } else {
-                currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
-                currentPlayerToken = playerTokens[currentPlayerIndex];
             }
-        }
+
+            Set<Character> tokens = new HashSet<>();
+            char[] playerChars = new char[numPlayers];
+            for (int i = 1; i <= numPlayers; i++) {
+                char token;
+                do {
+                    System.out.println("Enter the character to represent player " + i);
+                    token = scanner.nextLine().trim().charAt(0);
+                    if (tokens.contains(token)) {
+                        System.out.println(token + " is already taken as a player token!");
+                    }
+                } while (tokens.contains(token));
+                tokens.add(token);
+                playerChars[i - 1] = token;
+            }
+
+            int rows = 0;
+            while (rows < MIN_ROWS || rows > MAX_ROWS) {
+                System.out.println("How many rows should be on the board?");
+                rows = Integer.parseInt(scanner.nextLine());
+                if (rows < MIN_ROWS) {
+                    System.out.println("Number of rows cannot be less than " + MIN_ROWS);
+                } else if (rows > MAX_ROWS) {
+                    System.out.println("Number of rows cannot be greater than " + MAX_ROWS);
+                }
+            }
+
+            int cols = 0;
+            while (cols < MIN_COLS || cols > MAX_COLS) {
+                System.out.println("How many columns should be on the board?");
+                cols = Integer.parseInt(scanner.nextLine());
+                if (cols < MIN_COLS) {
+                    System.out.println("Number of columns cannot be less than " + MIN_COLS);
+                } else if (cols > MAX_COLS) {
+                    System.out.println("Number of columns cannot be greater than " + MAX_COLS);
+                }
+            }
+
+            int numToWin = 0;
+            while (numToWin < MIN_NUM_TO_WIN || numToWin > MAX_NUM_TO_WIN) {
+                System.out.println("How many in a row to win?");
+                numToWin = Integer.parseInt(scanner.nextLine());
+                if (numToWin < MIN_NUM_TO_WIN) {
+                    System.out.println("Number of tokens in a row to win cannot be less than " + MIN_NUM_TO_WIN);
+                } else if (numToWin > MAX_NUM_TO_WIN) {
+                    System.out.println("Number of tokens in a row to win cannot be greater than " + MAX_NUM_TO_WIN);
+                }
+            }
+
+            IGameBoard gameBoard = null;
+            while (gameBoard == null) {
+                System.out.println("Would you like a Fast Game (F/f) or a Memory Efficient Game (M/m)?");
+                char gameType = scanner.nextLine().trim().charAt(0);
+                if (gameType == 'F' || gameType == 'f') {
+                    gameBoard = new GameBoard(rows, cols, numToWin);
+                } else if (gameType == 'M' || gameType == 'm') {
+                    gameBoard = new GameBoardMem(rows, cols, numToWin);
+                } else {
+                    System.out.println("Please enter F or M");
+                }
+            }
+
+            // Main game loop
+            boolean gameWon = false;
+            int currentPlayerIndex = 0;
+            while (!gameWon && !gameBoard.checkTie()) {
+                System.out.println(gameBoard.toString());
+                char currentPlayerChar = playerChars[currentPlayerIndex];
+                int col = -1;
+                boolean validColumn = false;
+
+                while (!validColumn) {
+                    System.out.println("Player " + currentPlayerChar + ", what column do you want to place your marker in?");
+                    col = Integer.parseInt(scanner.nextLine());
+                    if (col < 0) {
+                        System.out.println("Column cannot be less than 0");
+                    } else if (col >= gameBoard.getNumColumns()) {
+                        System.out.println("Column cannot be greater than " + (gameBoard.getNumColumns() - 1));
+                    } else if (!gameBoard.checkIfFree(col)) {
+                        System.out.println("Column " + col + " is full. Please choose another column.");
+                    } else {
+                        validColumn = true;
+                    }
+                }
+
+                gameBoard.dropToken(currentPlayerChar, col);
+                gameWon = gameBoard.checkForWin(col);
+
+                if (gameWon) {
+                    System.out.println("Player " + currentPlayerChar + " wins!");
+                } else {
+                    currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
+                }
+            }
+
+            if (gameBoard.checkTie()) {
+                System.out.println("The game is a tie!");
+            }
+
+
+            // Play again prompt
+            System.out.println("Would you like to play again? Y/N");
+            playAgain = scanner.nextLine().equalsIgnoreCase("Y");
+
+        } while (playAgain);
+
         scanner.close();
     }
 }
