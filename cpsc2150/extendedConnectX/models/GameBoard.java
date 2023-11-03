@@ -110,12 +110,34 @@ public class GameBoard extends AbsGameBoard{
 
     public int getRowOfLastToken(int c) {
 
-        for (int q = 0; q < NUM_ROWS; q++) {
+        for (int q = NUM_ROWS - 1; q >= 0; q--) {
             if (board[q][c] != ' ') {
                 return q;
-            }//for testing, fix this logic if have time
+            }
         }
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        // Append column numbers
+        sb.append("|");
+        for (int col = 0; col < getNumColumns(); col++) {
+            sb.append(" ").append(col).append("|");
+        }
+        sb.append("\n");
+
+        // Append board rows from top to bottom for GameBoard
+        for (int row = getNumRows() - 1; row >= 0; row--) {
+            sb.append("|");
+            for (int col = 0; col < getNumColumns(); col++) {
+                char content = board[row][col]; // Directly access the board array
+                sb.append(" ").append(content).append("|");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
 }
