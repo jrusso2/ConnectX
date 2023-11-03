@@ -147,6 +147,7 @@ public class GameScreen {
                 gameWon = gameBoard.checkForWin(col);
 
                 if (gameWon) {
+                    System.out.println(gameBoard.toString());
                     System.out.println("Player " + currentPlayerChar + " wins!");
                 } else {
                     currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
