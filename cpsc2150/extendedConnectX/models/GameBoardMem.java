@@ -10,7 +10,7 @@ import java.util.Map;
  * The key of the map is a Character representing the player.
  * The value associated with each player is a List of BoardPositions that the player occupies on the board.
  */
-public class GameBoardMem extends AbsGameBoard{
+public class GameBoardMem extends AbsGameBoard implements IGameBoard {
 
     // Map to represent the game board
     private Map<Character, List<BoardPosition>> board;
@@ -73,20 +73,15 @@ public class GameBoardMem extends AbsGameBoard{
 
     @Override
     public void dropToken(char p, int c) {
-        // Create a new BoardPosition for the token
+        // Find the lowest empty space in the column
         int row = getNumRows() - 1;
-        while (isPlayerAtPos(new BoardPosition(row, c), p) && row > 0) {
+        while (row >= 0 && whatsAtPos(new BoardPosition(row, c)) != ' ') {
             row--;
         }
-        BoardPosition newPos = new BoardPosition(row, c);
-
-        // Add the position to the player's list in the map
-        if (board.containsKey(p)) {
-            board.get(p).add(newPos);
-        } else {
-            List<BoardPosition> newList = new ArrayList<>();
-            newList.add(newPos);
-            board.put(p, newList);
+        if (row >= 0) { // If a valid row is found
+            BoardPosition newPos = new BoardPosition(row, c);
+            // Add the position to the player's list in the map
+            board.computeIfAbsent(p, k -> new ArrayList<>()).add(newPos);
         }
     }
 
