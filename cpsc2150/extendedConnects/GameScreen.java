@@ -31,13 +31,10 @@ public class GameScreen {
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 10;
     private static final int MIN_ROWS = 3;
-
     private static final int MAX_ROWS = 100;
     private static final int MIN_COLS = 3;
-
     private static final int MAX_COLS = 100;
     private static final int MIN_NUM_TO_WIN = 3;
-
     private static final int MAX_NUM_TO_WIN = 25;
 
 
@@ -48,16 +45,16 @@ public class GameScreen {
         boolean playAgain;
 
         do {
-            int numPlayers = 0;
-            while (numPlayers < MIN_PLAYERS || numPlayers > MAX_PLAYERS) {
+            int numPlayers;
+            do{
                 System.out.println("How many players?");
                 numPlayers = Integer.parseInt(scanner.nextLine());
                 if (numPlayers < MIN_PLAYERS) {
                     System.out.println("Must be at least " + MIN_PLAYERS + " players");
                 } else if (numPlayers > MAX_PLAYERS) {
-                    System.out.println("Must be " + MAX_PLAYERS + " players or fewer");
-                }
-            }
+                    System.out.println("Must be " + MAX_PLAYERS + " players or fewer");}
+                
+            }        while (numPlayers < MIN_PLAYERS || numPlayers > MAX_PLAYERS);
 
             Set<Character> tokens = new HashSet<>();
             char[] playerChars = new char[numPlayers];
