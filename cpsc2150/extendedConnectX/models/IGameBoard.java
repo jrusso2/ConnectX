@@ -150,7 +150,7 @@ public interface IGameBoard {
     }
 
     /**
-     * This function checks to see if a game has been win with 5 matching player tokens in a row vertically
+     * This function checks to see if a game has been win with NUM_TO_WIN matching player tokens in a row vertically
      *
      * @param pos position of token placed
      * @param p   player who placed the last token
@@ -188,7 +188,7 @@ public interface IGameBoard {
     }
 
     /**
-     * This function checks to see if a game has been win with 5 matching player tokens in a row diagonally
+     * This function checks to see if a game has been won with NUM_TO_WIN matching player tokens in a row diagonally
      *
      * @param pos position of token placed
      * @param p   player who placed the last token

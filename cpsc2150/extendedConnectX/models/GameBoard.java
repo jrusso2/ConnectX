@@ -119,6 +119,7 @@ public class GameBoard extends AbsGameBoard{
     }
 
     @Override
+<<<<<<< Updated upstream
     public String toString() {
         StringBuilder sb = new StringBuilder();
         // Append column numbers
@@ -141,3 +142,104 @@ public class GameBoard extends AbsGameBoard{
     }
 
 }
+=======
+    public boolean checkHorizWin(BoardPosition pos, char p) {
+        /*checks to see if the last token placed (which was placed in position pos by player p) resulted in Num_TO_WIN in a row
+        horizontally. Returns true if it does, otherwise false*/
+       
+        int row = getNumRows() - 1;
+        while (board[row][pos.getColumn()] == ' ') {
+            row--;
+        }
+        
+        BoardPosition checkHoriz;
+        //check for all valid configurations that include last played token where there could be NUM_TO_WIN in a row horizontally
+        for (int x = 0; x < getNumToWin(); x++) {
+            if ((pos.getColumn() - x) >= 0 && pos.getColumn() + ((getNumToWin() - 1) - x) < getNumColumns()){
+                
+                //return true if any of the possible legal configurations result in NUM_TO_WIN in a row horizontally
+                for (int j = 0; j < getNumToWin(); j++) {
+                    checkHoriz = new BoardPosition((row), ((pos.getColumn() - x) + j));
+     
+                        if (whatsAtPos(checkHoriz) == board[row][pos.getColumn()]) {
+                        if (j == getNumToWin() - 1) {
+                            return true;
+                        }
+                    } 
+                        else {break;}
+                }
+ 
+            }
+        }
+  
+    //else return false
+      return false;
+    }
+
+
+    @Override
+    public boolean checkDiagWin(BoardPosition pos, char p) {
+  /*checks to see if the last token placed (which was placed in position pos by player p) resulted in NUM_TO_WIN in a row
+        diagonally. Returns true if it does, otherwise false Note: there are two diagonals to check*/
+        
+        int row=getNumRows()-1;
+        while (board[row][pos.getColumn()]==' '){
+        row--;
+        }
+                BoardPosition checkDiag;
+                //check for diagonal win with left end lower than right end
+                for (int x=0; x<getNumToWin();x++){
+                    
+                    //checks all permutations of diagonals containing the last placed token
+                    if((row-x)>=0 && row+((getNumToWin()-1)-x)< getNumRows() &&
+                       (pos.getColumn()-x)>=0 && pos.getColumn()+((getNumToWin()-1)-x)< getNumColumns()){
+                
+                        //if no positions out of bounds, check if all diagonal positions equal to p
+                        for (int j=0; j<getNumToWin();j++){
+                            checkDiag = new BoardPosition((((row)-x)+j), ((pos.getColumn()-x)+j));
+                            //if 5 spaces in a diagonal have the same token, that player wins
+                            if (whatsAtPos(checkDiag)==board[row][pos.getColumn()]){
+                                if (j == getNumToWin()-1){
+                                    return true;
+                                }
+                            }
+                            else {
+                                    break;
+                                }
+                            
+                            }
+            
+                        }
+         
+                       }
+                       //check for diagonal win with right end lower than left end
+                       for (int x=0; x<getNumToWin();x++){
+                   
+                    //checks all permutations of diagonals containing the last placed token
+                    if((row+x)<getNumRows() && row-((getNumToWin()-1)-x)>=0 &&
+                       (pos.getColumn()-x)>=0 && pos.getColumn()+((getNumToWin()-1)-x)< getNumColumns()){
+                        //if no positions out of bounds, check if all diagonal positions equal to p
+                        for (int j=0; j<getNumToWin();j++){
+                            checkDiag = new BoardPosition((((row)-((getNumToWin()-1)-x-j))), (pos.getColumn()+((getNumToWin()-1)-x-j)));
+                            //if 5 spaces in a diagonal have the same token, that player wins
+                            if (whatsAtPos(checkDiag)==board[row][pos.getColumn()]){
+                                if (j == getNumToWin()-1){
+                                    return true;
+                                }
+                            }
+                            else {
+                                    break;
+                                }
+                            
+                            }
+      
+                        }
+                    
+                       }
+                    
+                       return false;
+                }
+  
+        
+ }
+>>>>>>> Stashed changes
