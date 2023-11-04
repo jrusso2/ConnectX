@@ -9,11 +9,16 @@ package cpsc2150.extendedConnectX.models;
  * <p>
  * Initialization ensures:
  * The gameboard is a grid of size NUM_ROWS x NUM_COLS containing blank characters
-
+ * <p>
+ * Defines:
+ * NUM_ROWS: 9
+ * NUM_COLS: 7
+ * NUM_TO_WIN: 5
+ * <p>
  * Constraints:
- * 101 > NUM_ROWS > 0 && 101 > NUM_COLS > 0 && 26 >NUM_TO_WIN > 2
+ * NUM_ROWS > 0 && NUM_COLS > 0 && NUM_TO_WIN > 0
  * NUM_TO_WIN <= NUM_ROWS && NUM_TO_WIN <= NUM_COLS
- * [Player tokens are represented as characters defined by user input]
+ * [Player tokens are represented as 'X' or 'O']
  * [The game board tracks the tokens placed by each player]
  * [Players take turns in the game]
  * [A win is only declared if a player gets NUM_TO_WIN tokens in a line horizontally, vertically, or diagonally]
