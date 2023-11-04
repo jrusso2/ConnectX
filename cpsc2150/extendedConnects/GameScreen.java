@@ -155,6 +155,7 @@ public class GameScreen {
             }
 
             if (gameBoard.checkTie()) {
+                System.out.println(gameBoard.toString());
                 System.out.println("The game is a tie!");
             }
 
