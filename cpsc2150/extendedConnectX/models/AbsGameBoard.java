@@ -1,6 +1,13 @@
 package cpsc2150.extendedConnectX.models;
 
 public abstract class AbsGameBoard implements IGameBoard {
+    /**
+     * This function provides a visual representation of the gameboard
+     * @param none
+     * @pre none
+     * @return [returns a string object, which is a visual representation of the gameboard]
+     * @post self = #self
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("|");

@@ -71,8 +71,8 @@ public class GameScreen {
                 playerChars[i - 1] = token;
             }
 
-            int rows = 0;
-            while (rows < MIN_ROWS || rows > MAX_ROWS) {
+            int rows;
+            do{
                 System.out.println("How many rows should be on the board?");
                 rows = Integer.parseInt(scanner.nextLine());
                 if (rows < MIN_ROWS) {
@@ -80,10 +80,10 @@ public class GameScreen {
                 } else if (rows > MAX_ROWS) {
                     System.out.println("Number of rows cannot be greater than " + MAX_ROWS);
                 }
-            }
+            }while (rows < MIN_ROWS || rows > MAX_ROWS);
 
-            int cols = 0;
-            while (cols < MIN_COLS || cols > MAX_COLS) {
+            int cols;
+            do{
                 System.out.println("How many columns should be on the board?");
                 cols = Integer.parseInt(scanner.nextLine());
                 if (cols < MIN_COLS) {
@@ -91,10 +91,10 @@ public class GameScreen {
                 } else if (cols > MAX_COLS) {
                     System.out.println("Number of columns cannot be greater than " + MAX_COLS);
                 }
-            }
+            }while (cols < MIN_COLS || cols > MAX_COLS);
 
-            int numToWin = 0;
-            while (numToWin < MIN_NUM_TO_WIN || numToWin > MAX_NUM_TO_WIN) {
+            int numToWin;
+            do{
                 System.out.println("How many in a row to win?");
                 numToWin = Integer.parseInt(scanner.nextLine());
                 if (numToWin < MIN_NUM_TO_WIN) {
@@ -102,7 +102,7 @@ public class GameScreen {
                 } else if (numToWin > MAX_NUM_TO_WIN) {
                     System.out.println("Number of tokens in a row to win cannot be greater than " + MAX_NUM_TO_WIN);
                 }
-            }
+            }while (numToWin < MIN_NUM_TO_WIN || numToWin > MAX_NUM_TO_WIN);
 
             IGameBoard gameBoard = null;
             while (gameBoard == null) {

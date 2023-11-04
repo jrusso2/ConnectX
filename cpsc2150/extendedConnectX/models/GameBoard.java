@@ -27,13 +27,16 @@ public class GameBoard extends AbsGameBoard{
 
 
     /**
-     * constructor for the GameBoard object. sets the instance vars to the default values
-     *
-     * @pre none
-     * @post [each position in GameBoard array must be empty, board[0][0] is the bottom left, board[8][6] is the top right]
+     * constructor for the GameBoard object. sets the instance vars to the values of the inputs
+     * @param rows the number of rows on the board
+     * @param cols the number of columns on the board
+     * @param win the number of consecutive tokens to win
+     * @pre 3<=rows<=100 && 3<=cols<=100 && 3<=win<=25 && win <=cols && win <=rows
+     * @post an empty gameboard array is created with dimensions of [rows][cols] and a win condition of win in a row tokens
+     *  board[0][0] is the bottom left, board[rows-1][cols-1] is the top right
+     * win = win && cols = cols && rows = rows
+     * NUM_ROWS=rows && NUM_COLS=col && NUM_TO_WIN=win
      */
-
-        //Initialize the board array from user input
     public GameBoard(int rows, int cols, int win){
         setNumRows(rows);
         setNumCol(cols);
@@ -48,35 +51,74 @@ public class GameBoard extends AbsGameBoard{
         }
     }
 
-  
+    /**
+     * setter for the number of rows in the gameboard
+     * @param rows the number of rows on the board
+     * @pre 3<=rows<=100
+     * @post rows=rows && NUM_ROWS=rows
+     */
     public void setNumRows(int rows) {
         NUM_ROWS=rows;
     }
 
-
+    /**
+     * setter for the number of columns in the gameboard
+     * @param rows the number of columns on the board
+     * @pre 3<=columns<=100
+     * @post col=col && NUM_COLS=col
+     */
     public void setNumCol(int col) {
         NUM_COLS=col;
     }
 
-
+    /**
+     * setter for the number of rows in the gameboard
+     * @param win the number of tokens in a row on the board to win
+     * @pre 3<=win<=25
+     * @post win=win && NUM_TO_WIN=win
+     */
     public void setNumToWin(int win) {
         NUM_TO_WIN=win;
     }
 
- 
+   /**
+     * getter for the number of rows in the gameboard
+     * @param none
+     * @return [returns the number of rows on the gameboard]
+     * @post #self=#self
+     */
     public int getNumRows() {
         return NUM_ROWS;
     }
 
-
+    /**
+     * getter for the number of columns in the gameboard
+     * @param none
+     * @return [returns the number of columns on the gameboard]
+     * @post #self=#self
+     */
     public int getNumColumns() {
         return NUM_COLS;
     }
 
-
+  /**
+     * getter for the number of tokens in a tow to win on the gameboard
+     * @param none
+     * @return [returns the number tokens in a row to win]
+     * @post #self=#self
+     */
     public int getNumToWin() {
         return NUM_TO_WIN;
     }
+    /**
+     * This is function is used to allow a player to place their token in the lowest available spot in a column
+     *
+     * @param p player token, either x or o
+     * @param c to select column to place token
+     * @pre checkIfFree(c) == true
+     * 0 <= c < NUM_COLS
+     * @post [the function will place the players token, p, in column c in the lowest available row of board]
+     */
 
     @Override
     public void dropToken(char p, int c) {
@@ -90,7 +132,15 @@ public class GameBoard extends AbsGameBoard{
         }
     }
 
-
+    /**
+     * This function returns what token is at a specific position on the gameboard
+     *
+     * @param pos position indicated to look at
+     * @return character stored at pos, if no value returns a blank space
+     * @pre none
+     * @post [returns character at the selected postition]
+     * self = #self
+     */
     @Override
     public char whatsAtPos(BoardPosition pos) {
         //returns what is in the GameBoard at position pos If no marker is there, it returns a blank space char.
@@ -117,7 +167,13 @@ public class GameBoard extends AbsGameBoard{
         }
         return -1;
     }
-
+    /**
+     * This function provides a visual representation of the gameboard
+     * @param none
+     * @pre none
+     * @return [returns a string which is a visual representation of the gameboard]
+     * @post self = #self
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -139,7 +195,16 @@ public class GameBoard extends AbsGameBoard{
         }
         return sb.toString();
     }
-
+    /**
+     * This function checks to see if a game has been won with NUM_TO_WIN matching player tokens in a row horozontally
+     *
+     * @param pos position of token placed
+     * @param p   player who placed the last token
+     * @return true if last token placed matches NUM_TO_WIN tokens horizontally, false if not
+     * @pre p != " "
+     * @post [returns true if last placed token is the last to make up the 5 consecutive same tokens horizontally]
+     * self = #self
+     */
     @Override public boolean checkHorizWin(BoardPosition pos, char p) {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in Num_TO_WIN in a row
         horizontally. Returns true if it does, otherwise false*/
@@ -172,7 +237,17 @@ public class GameBoard extends AbsGameBoard{
     //else return false
       return false;
     }
-    
+
+        /**
+     * This function checks to see if a game has been won with NUM_TO_WIN matching player tokens in a row diagonally
+     *
+     * @param pos position of token placed
+     * @param p   player who placed the last token
+     * @return true if last token placed matches NUM_TO_WIN tokens diagonally, false if not
+     * @pre p != " "
+     * @post [returns true if last placed token is the last to make up the 5 consecutive same tokens diagonallt]
+     * self = #self
+     */
     @Override
     public boolean checkDiagWin(BoardPosition pos, char p) {
   /*checks to see if the last token placed (which was placed in position pos by player p) resulted in NUM_TO_WIN in a row

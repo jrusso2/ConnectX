@@ -44,7 +44,6 @@ public interface IGameBoard {
      * @post [the top-most space in each column is a blank space]
      * [return true if column c has more than the top row blank space]
      * [return false if column c has only one blank space (the top row)]
-     * (board[8][6] == " ") == true
      * self = #self
      */
     default boolean checkIfFree(int c) {
@@ -107,11 +106,11 @@ public interface IGameBoard {
     }
 
     /**
-     * This function checks to see if a game has been win with 5 matching player tokens in a row horozontally
+     * This function checks to see if a game has been won with NUM_TO_WIN matching player tokens in a row horozontally
      *
      * @param pos position of token placed
      * @param p   player who placed the last token
-     * @return true if last token placed matches 5 tokens horizontally, false if not
+     * @return true if last token placed matches NUM_TO_WIN tokens horizontally, false if not
      * @pre p != " "
      * @post [returns true if last placed token is the last to make up the 5 consecutive same tokens horizontally]
      * self = #self
@@ -248,11 +247,10 @@ public interface IGameBoard {
 
     /**
      * This function determines if a player token is located as a specific position on the gameboard
-     *
      * @param pos    position to look at
      * @param player the player who we are checking is at the specified position
      * @return true if player is at the specificed position, otherwise returns false
-     * @pre p = "x" || p = "O"
+     * @pre p = a token defined by the user
      * @post [returns true if player is at pos, returns false if player is not at pos]
      * self = #self
      */
