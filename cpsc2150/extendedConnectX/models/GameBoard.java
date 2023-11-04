@@ -119,7 +119,6 @@ public class GameBoard extends AbsGameBoard{
     }
 
     @Override
-<<<<<<< Updated upstream
     public String toString() {
         StringBuilder sb = new StringBuilder();
         // Append column numbers
@@ -141,9 +140,7 @@ public class GameBoard extends AbsGameBoard{
         return sb.toString();
     }
 
-}
-=======
-    public boolean checkHorizWin(BoardPosition pos, char p) {
+    @Override public boolean checkHorizWin(BoardPosition pos, char p) {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in Num_TO_WIN in a row
         horizontally. Returns true if it does, otherwise false*/
        
@@ -175,8 +172,7 @@ public class GameBoard extends AbsGameBoard{
     //else return false
       return false;
     }
-
-
+    
     @Override
     public boolean checkDiagWin(BoardPosition pos, char p) {
   /*checks to see if the last token placed (which was placed in position pos by player p) resulted in NUM_TO_WIN in a row
@@ -241,5 +237,5 @@ public class GameBoard extends AbsGameBoard{
                 }
   
         
- }
->>>>>>> Stashed changes
+ 
+}

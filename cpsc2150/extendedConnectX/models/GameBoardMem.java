@@ -10,7 +10,7 @@ import java.util.Map;
  * The key of the map is a Character representing the player.
  * The value associated with each player is a List of BoardPositions that the player occupies on the board.
  */
-public class GameBoardMem extends AbsGameBoard implements IGameBoard {
+public class GameBoardMem extends AbsGameBoard{
 
     // Map to represent the game board
     private Map<Character, List<BoardPosition>> board;
