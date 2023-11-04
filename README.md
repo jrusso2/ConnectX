@@ -11,3 +11,9 @@ Jason Russo (jrusso2) - wrote contracts for GameBoard and Project Report and hel
 Evan Schwartz (eschwa2) - Wrote majority of Project report and helped revise GameBoard contracts and Project Report
 Joe Becker (BoiledPNutEnjoyer) - wrote contracts for BoardPosition and Project Report. Helped revise both based on feedback
 ...
+--------------------------------------------------------
+## makefile Directions:
+
+Type "make" into the console to compile the program.\
+Type "make run" into the console to run the program.\
+Type "make clean" into the console to remove the compiled classes.
