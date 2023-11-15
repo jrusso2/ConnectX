@@ -48,7 +48,7 @@ public class GameBoardMem extends AbsGameBoard{
 
     /**
      * setter for the number of columns in the gameboard
-     * @param rows the number of columns on the board
+     * @param col the number of columns on the board
      * @pre 3<=columns<=100
      * @post col=col && NUM_COLS=col
      */
@@ -67,7 +67,6 @@ public class GameBoardMem extends AbsGameBoard{
     }
   /**
      * getter for the number of rows in the gameboard
-     * @param none
      * @return [returns the number of rows on the gameboard]
      * @post #self=#self
      */
@@ -77,7 +76,6 @@ public class GameBoardMem extends AbsGameBoard{
 
   /**
      * getter for the number of columns in the gameboard
-     * @param none
      * @return [returns the number of columns on the gameboard]
      * @post #self=#self
      */
@@ -87,7 +85,6 @@ public class GameBoardMem extends AbsGameBoard{
 
   /**
      * getter for the number of tokens in a tow to win on the gameboard
-     * @param none
      * @return [returns the number tokens in a row to win]
      * @post #self=#self
      */

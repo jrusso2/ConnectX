@@ -66,7 +66,7 @@ public class GameBoard extends AbsGameBoard {
     /**
      * setter for the number of columns in the gameboard
      *
-     * @param rows the number of columns on the board
+     * @param col the number of columns on the board
      * @pre 3<= columns < = 1 0 0
             * @ post col = col & & NUM_COLS = col
      */
@@ -88,7 +88,6 @@ public class GameBoard extends AbsGameBoard {
     /**
      * getter for the number of rows in the gameboard
      *
-     * @param none
      * @return [returns the number of rows on the gameboard]
      * @post #self=#self
      */
@@ -99,7 +98,6 @@ public class GameBoard extends AbsGameBoard {
     /**
      * getter for the number of columns in the gameboard
      *
-     * @param none
      * @return [returns the number of columns on the gameboard]
      * @post #self=#self
      */
@@ -110,7 +108,6 @@ public class GameBoard extends AbsGameBoard {
     /**
      * getter for the number of tokens in a tow to win on the gameboard
      *
-     * @param none
      * @return [returns the number tokens in a row to win]
      * @post #self=#self
      */
@@ -179,7 +176,6 @@ public class GameBoard extends AbsGameBoard {
     /**
      * This function provides a visual representation of the gameboard
      *
-     * @param none
      * @return [returns a string which is a visual representation of the gameboard]
      * @pre none
      * @post self = #self

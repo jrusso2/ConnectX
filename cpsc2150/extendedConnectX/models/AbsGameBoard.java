@@ -4,7 +4,6 @@ public abstract class AbsGameBoard implements IGameBoard {
     /**
      * This function provides a visual representation of the gameboard
      *
-     * @param none
      * @return [returns a string object, which is a visual representation of the gameboard]
      * @pre none
      * @post self = #self
