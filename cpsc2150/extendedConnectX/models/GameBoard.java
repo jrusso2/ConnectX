@@ -7,7 +7,7 @@ Evan Schwartz - eschwa2
 Joseph Becker - BoiledPNutEnjoyer
 */
 
-public class GameBoard extends AbsGameBoard{
+public class GameBoard extends AbsGameBoard {
     /**
      * This class is for creating a gameboard to play connect X
      * Correspondence The game board = this.board
@@ -28,20 +28,21 @@ public class GameBoard extends AbsGameBoard{
 
     /**
      * constructor for the GameBoard object. sets the instance vars to the values of the inputs
+     *
      * @param rows the number of rows on the board
      * @param cols the number of columns on the board
-     * @param win the number of consecutive tokens to win
-     * @pre 3<=rows<=100 && 3<=cols<=100 && 3<=win<=25 && win <=cols && win <=rows
-     * @post an empty gameboard array is created with dimensions of [rows][cols] and a win condition of win in a row tokens
-     *  board[0][0] is the bottom left, board[rows-1][cols-1] is the top right
-     * win = win && cols = cols && rows = rows
-     * NUM_ROWS=rows && NUM_COLS=col && NUM_TO_WIN=win
+     * @param win  the number of consecutive tokens to win
+     * @pre 3<= rows < = 1 0 0 & & 3 < = cols < = 1 0 0 & & 3 < = win < = 2 5 & & win < = cols & & win < = rows
+            * @ post an empty gameboard array is created with dimensions of [ rows ] [ cols ] and a win condition of win in a row tokens
+            * board [ 0 ] [ 0 ] is the bottom left, board [ rows-1 ] [ cols-1 ] is the top right
+            * win = win & & cols = cols & & rows = rows
+            * NUM_ROWS = rows & & NUM_COLS = col & & NUM_TO_WIN = win
      */
-    public GameBoard(int rows, int cols, int win){
+    public GameBoard(int rows, int cols, int win) {
         setNumRows(rows);
         setNumCol(cols);
         setNumToWin(win);
-      board = new char[getNumRows()][getNumColumns()];
+        board = new char[getNumRows()][getNumColumns()];
 
         // Loop through each position in the board and set it to ' '
         for (int i = 0; i < getNumRows(); i++) {
@@ -53,36 +54,40 @@ public class GameBoard extends AbsGameBoard{
 
     /**
      * setter for the number of rows in the gameboard
+     *
      * @param rows the number of rows on the board
-     * @pre 3<=rows<=100
-     * @post rows=rows && NUM_ROWS=rows
+     * @pre 3<= rows < = 1 0 0
+            * @ post rows = rows & & NUM_ROWS = rows
      */
     public void setNumRows(int rows) {
-        NUM_ROWS=rows;
+        NUM_ROWS = rows;
     }
 
     /**
      * setter for the number of columns in the gameboard
+     *
      * @param rows the number of columns on the board
-     * @pre 3<=columns<=100
-     * @post col=col && NUM_COLS=col
+     * @pre 3<= columns < = 1 0 0
+            * @ post col = col & & NUM_COLS = col
      */
     public void setNumCol(int col) {
-        NUM_COLS=col;
+        NUM_COLS = col;
     }
 
     /**
      * setter for the number of rows in the gameboard
+     *
      * @param win the number of tokens in a row on the board to win
-     * @pre 3<=win<=25
-     * @post win=win && NUM_TO_WIN=win
+     * @pre 3<= win < = 2 5
+            * @ post win = win & & NUM_TO_WIN = win
      */
     public void setNumToWin(int win) {
-        NUM_TO_WIN=win;
+        NUM_TO_WIN = win;
     }
 
-   /**
+    /**
      * getter for the number of rows in the gameboard
+     *
      * @param none
      * @return [returns the number of rows on the gameboard]
      * @post #self=#self
@@ -93,6 +98,7 @@ public class GameBoard extends AbsGameBoard{
 
     /**
      * getter for the number of columns in the gameboard
+     *
      * @param none
      * @return [returns the number of columns on the gameboard]
      * @post #self=#self
@@ -101,8 +107,9 @@ public class GameBoard extends AbsGameBoard{
         return NUM_COLS;
     }
 
-  /**
+    /**
      * getter for the number of tokens in a tow to win on the gameboard
+     *
      * @param none
      * @return [returns the number tokens in a row to win]
      * @post #self=#self
@@ -110,6 +117,7 @@ public class GameBoard extends AbsGameBoard{
     public int getNumToWin() {
         return NUM_TO_WIN;
     }
+
     /**
      * This is function is used to allow a player to place their token in the lowest available spot in a column
      *
@@ -167,11 +175,13 @@ public class GameBoard extends AbsGameBoard{
         }
         return -1;
     }
+
     /**
      * This function provides a visual representation of the gameboard
+     *
      * @param none
-     * @pre none
      * @return [returns a string which is a visual representation of the gameboard]
+     * @pre none
      * @post self = #self
      */
     @Override
@@ -180,7 +190,11 @@ public class GameBoard extends AbsGameBoard{
         // Append column numbers
         sb.append("|");
         for (int col = 0; col < getNumColumns(); col++) {
-            sb.append(" ").append(col).append("|");
+            if (col < 10) {
+                // Add an extra space for single-digit column numbers
+                sb.append(" ");
+            }
+            sb.append(col).append("|");
         }
         sb.append("\n");
 
@@ -195,6 +209,7 @@ public class GameBoard extends AbsGameBoard{
         }
         return sb.toString();
     }
+
     /**
      * This function checks to see if a game has been won with NUM_TO_WIN matching player tokens in a row horozontally
      *
@@ -205,40 +220,42 @@ public class GameBoard extends AbsGameBoard{
      * @post [returns true if last placed token is the last to make up the 5 consecutive same tokens horizontally]
      * self = #self
      */
-    @Override public boolean checkHorizWin(BoardPosition pos, char p) {
+    @Override
+    public boolean checkHorizWin(BoardPosition pos, char p) {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in Num_TO_WIN in a row
         horizontally. Returns true if it does, otherwise false*/
-       
+
         int row = getNumRows() - 1;
         while (board[row][pos.getColumn()] == ' ') {
             row--;
         }
-        
+
         BoardPosition checkHoriz;
         //check for all valid configurations that include last played token where there could be NUM_TO_WIN in a row horizontally
         for (int x = 0; x < getNumToWin(); x++) {
-            if ((pos.getColumn() - x) >= 0 && pos.getColumn() + ((getNumToWin() - 1) - x) < getNumColumns()){
-                
+            if ((pos.getColumn() - x) >= 0 && pos.getColumn() + ((getNumToWin() - 1) - x) < getNumColumns()) {
+
                 //return true if any of the possible legal configurations result in NUM_TO_WIN in a row horizontally
                 for (int j = 0; j < getNumToWin(); j++) {
                     checkHoriz = new BoardPosition((row), ((pos.getColumn() - x) + j));
-     
-                        if (whatsAtPos(checkHoriz) == board[row][pos.getColumn()]) {
+
+                    if (whatsAtPos(checkHoriz) == board[row][pos.getColumn()]) {
                         if (j == getNumToWin() - 1) {
                             return true;
                         }
-                    } 
-                        else {break;}
+                    } else {
+                        break;
+                    }
                 }
- 
+
             }
         }
-  
-    //else return false
-      return false;
+
+        //else return false
+        return false;
     }
 
-        /**
+    /**
      * This function checks to see if a game has been won with NUM_TO_WIN matching player tokens in a row diagonally
      *
      * @param pos position of token placed
@@ -250,67 +267,64 @@ public class GameBoard extends AbsGameBoard{
      */
     @Override
     public boolean checkDiagWin(BoardPosition pos, char p) {
-  /*checks to see if the last token placed (which was placed in position pos by player p) resulted in NUM_TO_WIN in a row
+    /*checks to see if the last token placed (which was placed in position pos by player p) resulted in NUM_TO_WIN in a row
         diagonally. Returns true if it does, otherwise false Note: there are two diagonals to check*/
-        
-        int row=getNumRows()-1;
-        while (board[row][pos.getColumn()]==' '){
-        row--;
+
+        int row = getNumRows() - 1;
+        while (board[row][pos.getColumn()] == ' ') {
+            row--;
         }
-                BoardPosition checkDiag;
-                //check for diagonal win with left end lower than right end
-                for (int x=0; x<getNumToWin();x++){
-                    
-                    //checks all permutations of diagonals containing the last placed token
-                    if((row-x)>=0 && row+((getNumToWin()-1)-x)< getNumRows() &&
-                       (pos.getColumn()-x)>=0 && pos.getColumn()+((getNumToWin()-1)-x)< getNumColumns()){
-                
-                        //if no positions out of bounds, check if all diagonal positions equal to p
-                        for (int j=0; j<getNumToWin();j++){
-                            checkDiag = new BoardPosition((((row)-x)+j), ((pos.getColumn()-x)+j));
-                            //if 5 spaces in a diagonal have the same token, that player wins
-                            if (whatsAtPos(checkDiag)==board[row][pos.getColumn()]){
-                                if (j == getNumToWin()-1){
-                                    return true;
-                                }
-                            }
-                            else {
-                                    break;
-                                }
-                            
-                            }
-            
+        BoardPosition checkDiag;
+        //check for diagonal win with left end lower than right end
+        for (int x = 0; x < getNumToWin(); x++) {
+
+            //checks all permutations of diagonals containing the last placed token
+            if ((row - x) >= 0 && row + ((getNumToWin() - 1) - x) < getNumRows() &&
+                    (pos.getColumn() - x) >= 0 && pos.getColumn() + ((getNumToWin() - 1) - x) < getNumColumns()) {
+
+                //if no positions out of bounds, check if all diagonal positions equal to p
+                for (int j = 0; j < getNumToWin(); j++) {
+                    checkDiag = new BoardPosition((((row) - x) + j), ((pos.getColumn() - x) + j));
+                    //if 5 spaces in a diagonal have the same token, that player wins
+                    if (whatsAtPos(checkDiag) == board[row][pos.getColumn()]) {
+                        if (j == getNumToWin() - 1) {
+                            return true;
                         }
-         
-                       }
-                       //check for diagonal win with right end lower than left end
-                       for (int x=0; x<getNumToWin();x++){
-                   
-                    //checks all permutations of diagonals containing the last placed token
-                    if((row+x)<getNumRows() && row-((getNumToWin()-1)-x)>=0 &&
-                       (pos.getColumn()-x)>=0 && pos.getColumn()+((getNumToWin()-1)-x)< getNumColumns()){
-                        //if no positions out of bounds, check if all diagonal positions equal to p
-                        for (int j=0; j<getNumToWin();j++){
-                            checkDiag = new BoardPosition((((row)-((getNumToWin()-1)-x-j))), (pos.getColumn()+((getNumToWin()-1)-x-j)));
-                            //if 5 spaces in a diagonal have the same token, that player wins
-                            if (whatsAtPos(checkDiag)==board[row][pos.getColumn()]){
-                                if (j == getNumToWin()-1){
-                                    return true;
-                                }
-                            }
-                            else {
-                                    break;
-                                }
-                            
-                            }
-      
-                        }
-                    
-                       }
-                    
-                       return false;
+                    } else {
+                        break;
+                    }
+
                 }
-  
-        
- 
+
+            }
+
+        }
+        //check for diagonal win with right end lower than left end
+        for (int x = 0; x < getNumToWin(); x++) {
+
+            //checks all permutations of diagonals containing the last placed token
+            if ((row + x) < getNumRows() && row - ((getNumToWin() - 1) - x) >= 0 &&
+                    (pos.getColumn() - x) >= 0 && pos.getColumn() + ((getNumToWin() - 1) - x) < getNumColumns()) {
+                //if no positions out of bounds, check if all diagonal positions equal to p
+                for (int j = 0; j < getNumToWin(); j++) {
+                    checkDiag = new BoardPosition((((row) - ((getNumToWin() - 1) - x - j))), (pos.getColumn() + ((getNumToWin() - 1) - x - j)));
+                    //if 5 spaces in a diagonal have the same token, that player wins
+                    if (whatsAtPos(checkDiag) == board[row][pos.getColumn()]) {
+                        if (j == getNumToWin() - 1) {
+                            return true;
+                        }
+                    } else {
+                        break;
+                    }
+
+                }
+
+            }
+
+        }
+
+        return false;
+    }
+
+
 }
