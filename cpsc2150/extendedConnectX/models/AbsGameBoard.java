@@ -25,7 +25,7 @@ public abstract class AbsGameBoard implements IGameBoard {
             for (int col = 0; col < getNumColumns(); col++) {
                 BoardPosition position = new BoardPosition(row, col); // Create a BoardPosition object
                 char content = whatsAtPos(position); // Get the content using the method with BoardPosition
-                sb.append(" ").append(content).append("|");
+                sb.append(content).append(" ").append("|");
             }
             sb.append("\n");
         }
