@@ -203,7 +203,7 @@ public class GameBoard extends AbsGameBoard {
             sb.append("|");
             for (int col = 0; col < getNumColumns(); col++) {
                 char content = board[row][col]; // Directly access the board array
-                sb.append(" ").append(content).append("|");
+                sb.append(content).append(" ").append("|");
             }
             sb.append("\n");
         }
