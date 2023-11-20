@@ -2,6 +2,9 @@ package extendedConnectX.models;
 
 import org.junit.Test;
 
-@Test
 public class TestGameBoardMem {
+    @Test
+    public void test(){
+
+    }
 }
