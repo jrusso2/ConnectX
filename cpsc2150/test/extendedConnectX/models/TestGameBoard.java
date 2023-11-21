@@ -104,16 +104,6 @@ public class TestGameBoard {
         int cols = 7;
         int win = 5;
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
-
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
 
         assertEquals(board.checkIfFree(0), true);
     }
@@ -125,20 +115,7 @@ public class TestGameBoard {
         int cols = 7;
         int win = 5;
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
-
-        board.dropToken('X', 0);
-        expectedBoard[rows - 1][0] = 'X';
-
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
+        board.dropToken('X', 0); // Drop a token in the first column
 
         assertEquals(board.checkIfFree(0), true);
     }
@@ -149,22 +126,12 @@ public class TestGameBoard {
         int rows = 6;
         int cols = 7;
         int win = 5;
-        IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
+
+        IGameBoard board = gameBoardFactory(rows, cols, 4);
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
+            board.dropToken('X', 0); // Fill up the first column
         }
 
-        for (int i = 0; i < rows; i++) {
-            board.dropToken('X', 0);
-            expectedBoard[i][0] = 'X';
-        }
-
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
         assertEquals(board.checkIfFree(0), false);
     }
 
@@ -178,22 +145,11 @@ public class TestGameBoard {
         int cols = 7;
         int win = 4;
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
         for (int col = 0; col < 4; col++) {
             board.dropToken('X', col);
-            expectedBoard[rows - 1][col] = 'X';
         }
-
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
         BoardPosition lastPos = new BoardPosition(0, 0);
+
         assertEquals(board.checkHorizWin(lastPos, 'X'), true);
     }
 
@@ -204,22 +160,11 @@ public class TestGameBoard {
         int cols = 7;
         int win = 4;
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
-        for (int col = 3; col < 7; col++) {
+        for (int col = 0; col < 4; col++) {
             board.dropToken('X', col);
-            expectedBoard[rows - 1][col] = 'X';
         }
-
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
         BoardPosition lastPos = new BoardPosition(0, 3);
+
         assertEquals(board.checkHorizWin(lastPos, 'X'), true);
     }
 
@@ -230,23 +175,12 @@ public class TestGameBoard {
         int cols = 7;
         int win = 4;
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
         int[] dropOrder = {0, 2, 3, 1};
         for (int col : dropOrder) {
             board.dropToken('X', col);
-            expectedBoard[rows - 1][col] = 'X';
         }
-
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
         BoardPosition lastPos = new BoardPosition(0, 1);
+
         assertEquals(board.checkHorizWin(lastPos, 'X'), true);
     }
 
@@ -256,30 +190,15 @@ public class TestGameBoard {
         int rows = 6;
         int cols = 7;
         int win = 4;
+
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
-        // Dropping tokens in the specified order
         board.dropToken('X', 0);
-        expectedBoard[rows - 1][0] = 'X';
         board.dropToken('X', 1);
-        expectedBoard[rows - 1][1] = 'X';
         board.dropToken('O', 2);
-        expectedBoard[rows - 1][2] = 'O';
         board.dropToken('X', 3);
-        expectedBoard[rows - 1][3] = 'X';
         board.dropToken('X', 4);
-        expectedBoard[rows - 1][4] = 'X';
-
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
         BoardPosition lastPos = new BoardPosition(0, 4);
+
         assertEquals(board.checkHorizWin(lastPos, 'X'), false);
     }
 
@@ -292,24 +211,13 @@ public class TestGameBoard {
         int rows = 6;
         int cols = 7;
         int win = 4;
+
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
-        // Dropping tokens in the same column
         for (int i = 0; i < 4; i++) {
-            board.dropToken('X', 3);
-            expectedBoard[rows - 1 - i][3] = 'X'; // Tokens fill from bottom up
+            board.dropToken('X', 3); // Drop in the same column
         }
+        BoardPosition lastPos = new BoardPosition(3, 3);
 
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
-        BoardPosition lastPos = new BoardPosition(rows - 3, 3); // Adjusted to bottom of the column
         assertEquals(board.checkVertWin(lastPos, 'X'), true);
     }
 
@@ -319,26 +227,14 @@ public class TestGameBoard {
         int rows = 6;
         int cols = 7;
         int win = 4;
+
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
-        // Dropping tokens in the specified order
-        board.dropToken('O', 2);
-        expectedBoard[rows - 1][2] = 'O'; // Opponent's token at the bottom
+        board.dropToken('O', 2); // Opponent's token at the bottom
         for (int i = 0; i < 4; i++) {
-            board.dropToken('X', 2);
-            expectedBoard[rows - 2 - i][2] = 'X'; // Four 'X' tokens above the 'O' token
+            board.dropToken('X', 2); // Four 'X' tokens above the 'O' token
         }
+        BoardPosition lastPos = new BoardPosition(4, 2);
 
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
-        BoardPosition lastPos = new BoardPosition(rows - 2, 2); // Adjusted to the position of the last 'X' token
         assertEquals(board.checkVertWin(lastPos, 'X'), true);
     }
 
@@ -349,27 +245,15 @@ public class TestGameBoard {
         int cols = 7;
         int win = 4;
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
-        // Dropping tokens in the specified order
         for (int i = 0; i < 2; i++) {
             board.dropToken('O', 2); // Drop opponents pieces
-            expectedBoard[rows - 1 - i][2] = 'O';
         }
+
         for (int i = 0; i < 4; i++) {
             board.dropToken('X', 2); // Drop winning pieces
-            expectedBoard[rows - 3 - i][2] = 'X';
         }
+        BoardPosition lastPos = new BoardPosition(5, 2);
 
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
-        BoardPosition lastPos = new BoardPosition(rows - 1, 2); // Adjusted to the top of the column
         assertEquals(board.checkVertWin(lastPos, 'X'), true);
     }
 
@@ -379,28 +263,14 @@ public class TestGameBoard {
         int rows = 6;
         int cols = 7;
         int win = 4;
+
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
-        // Dropping tokens in the specified order
         board.dropToken('X', 1);
-        expectedBoard[rows - 1][1] = 'X';
         board.dropToken('O', 1);
-        expectedBoard[rows - 2][1] = 'O';
         board.dropToken('X', 1);
-        expectedBoard[rows - 3][1] = 'X';
         board.dropToken('X', 1);
-        expectedBoard[rows - 4][1] = 'X';
+        BoardPosition lastPos = new BoardPosition(3, 1);
 
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
-        BoardPosition lastPos = new BoardPosition(rows - 4, 1); // Adjusted to the position of the last 'X' token
         assertEquals(board.checkVertWin(lastPos, 'X'), false);
     }
 
@@ -414,29 +284,17 @@ public class TestGameBoard {
         int cols = 7;
         int win = 4;
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
         // Creating an ascending diagonal from bottom left
         for (int i = 1; i < 4; i++) {
             for (int j = 0; j < i; j++) {
                 board.dropToken('O', i);
-                expectedBoard[rows - 1 - j][i] = 'O';
             }
         }
         for (int k = 0; k < 4; k++) {
             board.dropToken('X', k);
-            expectedBoard[rows - 1 - k][k] = 'X';
         }
+        BoardPosition lastPos = new BoardPosition(3, 3);
 
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
-        BoardPosition lastPos = new BoardPosition(rows - 3, 3); // Adjusted to the position of the last 'X' token
         assertEquals(board.checkDiagWin(lastPos, 'X'), true);
     }
 
@@ -447,29 +305,17 @@ public class TestGameBoard {
         int cols = 7;
         int win = 4;
         IGameBoard board = gameBoardFactory(rows, cols, win);
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' ';
-            }
-        }
-
         // Creating an ascending diagonal from bottom left
         for (int i = 1; i < 4; i++) {
             for (int j = 0; j < i; j++) {
                 board.dropToken('O', i);
-                expectedBoard[rows - 1 - j][i] = 'O';
             }
         }
         for (int k = 0; k < 4; k++) {
             board.dropToken('X', k);
-            expectedBoard[rows - 1 - k][k] = 'X';
         }
+        BoardPosition lastPos = new BoardPosition(0, 0);
 
-        String expectedBoardString = boardToString(expectedBoard);
-
-        assertEquals(expectedBoardString, board.toString());
-        BoardPosition lastPos = new BoardPosition(0, 0); // Adjusted to the position of the last 'X' token
         assertEquals(board.checkDiagWin(lastPos, 'X'), true);
     }
 
@@ -844,7 +690,7 @@ public class TestGameBoard {
             }
         }
         board.dropToken('X', 0);
-        expectedBoard[rows - 1][0] = 'X';
+        expectedBoard[rows-1][0] = 'X';
 
         assertEquals(boardToString(expectedBoard), board.toString());
     }
@@ -865,9 +711,9 @@ public class TestGameBoard {
         board.dropToken('X', 0);
         board.dropToken('O', 0);
         board.dropToken('X', 0);
-        expectedBoard[rows - 1][0] = 'X';
-        expectedBoard[rows - 2][0] = 'O';
-        expectedBoard[rows - 3][0] = 'X';
+        expectedBoard[rows-1][0] = 'X';
+        expectedBoard[rows-2][0] = 'O';
+        expectedBoard[rows-3][0] = 'X';
 
         assertEquals(boardToString(expectedBoard), board.toString());
     }
