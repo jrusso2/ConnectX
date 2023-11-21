@@ -486,8 +486,82 @@ public class TestGameBoard {
         board.dropToken('O',1);
         board.dropToken('O',0);
         board.dropToken('X',1);
+
         assertEquals(board.checkTie(), false);
 
+//whatsAtPos
+//- Create 5 distinct test cases
+//checks whats at position 0,0 when board is empty
+@Test
+public void testGameBoardWhatsAtPosEmptyBoard() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    BoardPosition Position= new BoardPosition(0, 0);
 
+    assertEquals(board.whatsAtPos(Position),' ');
+}
+//checks whats at position at the bottom of a column when a single token has been played in a column
+@Test
+public void testGameBoardWhatsAtPosBottomOfColumnOneTokenPlayed() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    board.dropToken('X',0);
+    BoardPosition Position= new BoardPosition(0, 0);
 
+    assertEquals(board.whatsAtPos(Position),'X');
+}
+//checks whats at position at the top of a full column
+@Test
+public void testGameBoardWhatsAtPosTopOfColumnFullColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    BoardPosition Position= new BoardPosition(5, 0);
+
+    assertEquals(board.whatsAtPos(Position),'O');
+}
+//checks whats at position in the middle of a full column
+@Test
+public void testGameBoardWhatsAtPosMiddleOfColumnFullColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    BoardPosition Position= new BoardPosition(2, 0);
+
+    assertEquals(board.whatsAtPos(Position),'X');
+}
+//checks whats at position at the most recently played space of a column that is not full
+@Test
+public void testGameBoardWhatsAtPosTopOfPartiallyFullColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    BoardPosition Position= new BoardPosition(4, 0);
+
+    assertEquals(board.whatsAtPos(Position),'X');
+}
 }
