@@ -578,10 +578,7 @@ public class TestGameBoard {
         board.dropToken('O', 0);
         BoardPosition Position = new BoardPosition(2, 0);
 
-
-        // Print the actual state of the game board
-        System.out.println("Actual Board State:");
-        System.out.println(board.toString());
+        
         assertEquals(board.whatsAtPos(Position), 'X');
     }
 
@@ -739,6 +736,7 @@ public class TestGameBoard {
             expectedBoard[row][0] = 'X'; // Filling the leftmost column in the expected board
         }
 
+
         assertEquals(boardToString(expectedBoard), board.toString());
     }
 
@@ -761,7 +759,6 @@ public class TestGameBoard {
             board.dropToken('X', col);
             expectedBoard[rows - 1][col] = 'X'; // Filling the bottom row in the expected board
         }
-
 
         assertEquals(boardToString(expectedBoard), board.toString());
     }
