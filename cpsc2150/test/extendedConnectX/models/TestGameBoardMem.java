@@ -278,8 +278,147 @@ public void testGameBoardMemCheckVertWinWithBrokenLine() {
 
 //checkDiagWin
 //- Create 7 distinct test cases
-//- Note: the different diagonals are distinct
+//checks for diagonal win when the last piece is placed at the top right of an ascending diagonal line of the same NUM_TO_WIN pieces in a row
+@Test
+public void testGameBoardMemCheckDiagWinAscendingLastTokenTopRight() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    // Creating an ascending diagonal from bottom left
+    for (int i = 1; i < 4; i++) {
+        for (int j = 0; j < i; j++){
+            board.dropToken('O', i);
+        }
+    }
+    for (int k = 0; k < 4; k++){
+        board.dropToken('X', k);
+    }
+    BoardPosition lastPos= new BoardPosition(3, 3);
 
+    assertEquals(board.checkDiagWin(lastPos,'X'), true);
+}
+//checks for diagonal win when the last piece is placed at the bottom left of an ascending diagonal line of the same NUM_TO_WIN pieces in a row
+@Test
+public void testGameBoardMemCheckDiagWinAscendingLastTokenBottomLeft() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    // Creating an ascending diagonal from bottom left
+    for (int i = 1; i < 4; i++) {
+        for (int j = 0; j < i; j++){
+            board.dropToken('O', i);
+        }
+    }
+    for (int k = 0; k < 4; k++){
+        board.dropToken('X', k);
+    }
+    BoardPosition lastPos= new BoardPosition(0, 0);
+
+    assertEquals(board.checkDiagWin(lastPos,'X'), true);
+}
+//checks for diagonal win when the last piece is placed in the middle of an ascending diagonal line of the same NUM_TO_WIN pieces in a row
+@Test
+public void testGameBoardMemCheckDiagWinAscendingLastTokenMiddle() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    // Creating an ascending diagonal from bottom left
+    for (int i = 1; i < 4; i++) {
+        for (int j = 0; j < i; j++){
+            board.dropToken('O', i);
+        }
+    }
+    for (int k = 0; k < 4; k++){
+        board.dropToken('X', k);
+    }
+    BoardPosition lastPos= new BoardPosition(1, 1);
+
+    assertEquals(board.checkDiagWin(lastPos,'X'), true);
+}
+//checks for a diagonal win when there are not NUM_TO_WIN pieces in a row diagonally
+@Test
+public void testGameBoardMemCheckDiagWinAscendingBrokenLine() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    // Creating an ascending diagonal from bottom left
+    for (int i = 1; i < 4; i++) {
+        for (int j = 0; j < i; j++){
+            board.dropToken('O', i);
+        }
+    }
+    board.dropToken('X',0);
+    board.dropToken('X',1);
+    board.dropToken('O',2);
+    board.dropToken('X',3);
+    BoardPosition lastPos= new BoardPosition(3, 3);
+
+    assertEquals(board.checkDiagWin(lastPos,'X'), false);
+}
+//checks for diagonal win when the last piece is placed at the top left of an descending diagonal line of the same NUM_TO_WIN pieces in a row
+@Test
+public void testGameBoardMemCheckDiagWinDescendingLastTokenTopLeft() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    // Creating an ascending diagonal from bottom right
+    for (int i = 0; i < 4; i++) {
+        for (int j = 3-i; j < 0; j--){
+            board.dropToken('O', i);
+        }
+    }
+    for (int k = 0; k < 4; k++){
+        board.dropToken('X', k);
+    }
+    BoardPosition lastPos= new BoardPosition(3, 0);
+
+    assertEquals(board.checkDiagWin(lastPos,'X'), true);
+}
+//checks for diagonal win when the last piece is placed at the bottom right of an descending diagonal line of the same NUM_TO_WIN pieces in a row
+@Test
+public void testGameBoardMemCheckDiagWinDescendingLastTokenBottomRight() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    // Creating an ascending diagonal from bottom right
+    for (int i = 0; i < 4; i++) {
+        for (int j = 3-i; j < 0; j--){
+            board.dropToken('O', i);
+        }
+    }
+    for (int k = 0; k < 4; k++){
+        board.dropToken('X', k);
+    }
+    BoardPosition lastPos= new BoardPosition(0, 3);
+
+    assertEquals(board.checkDiagWin(lastPos,'X'), true);
+}
+//checks for diagonal win when the last piece is placed in the middle of an descending diagonal line of the same NUM_TO_WIN pieces in a row
+@Test
+public void testGameBoardMemCheckDiagWinDescendingLastTokenMiddle() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    // Creating an ascending diagonal from bottom right
+    for (int i = 0; i < 4; i++) {
+        for (int j = 3-i; j < 0; j--){
+            board.dropToken('O', i);
+        }
+    }
+    for (int k = 0; k < 4; k++){
+        board.dropToken('X', k);
+    }
+    BoardPosition lastPos= new BoardPosition(2, 1);
+
+    assertEquals(board.checkDiagWin(lastPos,'X'), true);
+}
 
 //checkTie
 //- Create 4 distinct test cases
