@@ -205,6 +205,75 @@ public void testGameBoardMemCheckIfFreeFilledColumn() {
 
 //checkVertWin
 //- Create 4 distinct test cases
+//checks for vertical win when NUM_TO_WIN of the same type are stacked vertically in an otherwise empty column, below the maximum height of the column
+@Test
+public void testGameBoardMemCheckVertWinEmptyColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    for (int i = 0; i < 4; i++) {
+        board.dropToken('X', 3); // Drop in the same column
+    }
+    BoardPosition lastPos= new BoardPosition(3, 3);
+
+    assertEquals(board.checkVertWin(lastPos,'X'), true);
+}
+//checks for vertical win when NUM_TO_WIN of the same type are stacked on top of an opponent's piece below the maximum height of the column
+@Test
+public void testGameBoardMemCheckVertWinMiddleColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('O', 2); // Opponent's token at the bottom
+    for (int i = 0; i < 4; i++) {
+        board.dropToken('X', 2); // Four 'X' tokens above the 'O' token
+    }
+    BoardPosition lastPos= new BoardPosition(4, 2);
+
+    assertEquals(board.checkVertWin(lastPos,'X'), true);
+}
+//checks for vertical win when NUM_TO_WIN of the same type are stacked on top of an opponent's piece at the maximum height of the column
+@Test
+public void testGameBoardMemCheckVertWinTopOfColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    for (int i = 0; i < 2; i++) {
+        board.dropToken('O', 2); // Drop opponents pieces
+    }
+
+    for (int i = 0; i < 4; i++) {
+        board.dropToken('X', 2); // Drop winning pieces
+    }
+    BoardPosition lastPos= new BoardPosition(5, 2);
+
+    assertEquals(board.checkVertWin(lastPos,'X'), true);
+}
+//checks for vertical win when there are not NUM_TO_WIN pieces in a row vertically
+@Test
+public void testGameBoardMemCheckVertWinWithBrokenLine() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('X', 1);
+    board.dropToken('O', 1);
+    board.dropToken('X', 1);
+    board.dropToken('X', 1);
+    BoardPosition lastPos= new BoardPosition(3, 1);
+
+    assertEquals(board.checkVertWin(lastPos,'X'), false);
+}
+
+
+
+
 
 
 //checkDiagWin

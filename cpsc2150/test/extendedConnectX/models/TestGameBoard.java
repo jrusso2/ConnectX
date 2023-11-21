@@ -209,93 +209,76 @@ public class TestGameBoard {
 
 //checkVertWin
 //- Create 4 distinct test cases
+//checks for vertical win when NUM_TO_WIN of the same type are stacked vertically in an otherwise empty column, below the maximum height of the column
     @Test
-    public void testCheckVertWinEmptyColumn() {
+    public void testGameBoardCheckVertWinEmptyColumn() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
+        int win = 4;
 
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
+        IGameBoard board = gameBoardFactory(rows, cols, win);
         for (int i = 0; i < 4; i++) {
             board.dropToken('X', 3); // Drop in the same column
-            expectedBoard[rows - 1 - i][3] = 'X'; // Update expected board
         }
+        BoardPosition lastPos= new BoardPosition(3, 3);
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkVertWin(lastPos,'X'), true);
     }
-
+//checks for vertical win when NUM_TO_WIN of the same type are stacked on top of an opponent's piece below the maximum height of the column
     @Test
-    public void testCheckVertWinMiddleColumn() {
+    public void testGameBoardCheckVertWinMiddleColumn() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
+        int win = 4;
 
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
+        IGameBoard board = gameBoardFactory(rows, cols, win);
         board.dropToken('O', 2); // Opponent's token at the bottom
-        expectedBoard[rows - 1][2] = 'O'; // Update expected board
         for (int i = 0; i < 4; i++) {
             board.dropToken('X', 2); // Four 'X' tokens above the 'O' token
-            expectedBoard[rows - 2 - i][2] = 'X'; // Update expected board
         }
-        board.dropToken('O', 2); // Opponent's token at the top of the 'X' tokens
-        expectedBoard[rows - 6][2] = 'O'; // Update expected board
+        BoardPosition lastPos= new BoardPosition(4, 2);
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkVertWin(lastPos,'X'), true);
     }
-
+//checks for vertical win when NUM_TO_WIN of the same type are stacked on top of an opponent's piece at the maximum height of the column
     @Test
-    public void testCheckVertWinTopOfColumn() {
+    public void testGameBoardCheckVertWinTopOfColumn() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
+        int win = 4;
+        IGameBoard board = gameBoardFactory(rows, cols, win);
+        for (int i = 0; i < 2; i++) {
+            board.dropToken('O', 2); // Drop opponents pieces
         }
 
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
-        for (int i = 5; i >= 2; i--) {
-            board.dropToken('X', 2); // Drop in the same column
-            expectedBoard[i][2] = 'X'; // Update expected board
+        for (int i = 0; i < 4; i++) {
+            board.dropToken('X', 2); // Drop winning pieces
         }
+        BoardPosition lastPos= new BoardPosition(5, 2);
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkVertWin(lastPos,'X'), true);
     }
-
+//checks for vertical win when there are not NUM_TO_WIN pieces in a row vertically
     @Test
-    public void testCheckVertWinWithBrokenLine() {
+    public void testGameBoardCheckVertWinWithBrokenLine() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
+        int win = 4;
 
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
+        IGameBoard board = gameBoardFactory(rows, cols, win);
         board.dropToken('X', 1);
-        expectedBoard[rows - 1][1] = 'X'; // Update expected board
         board.dropToken('O', 1);
-        expectedBoard[rows - 2][1] = 'O'; // Update expected board
         board.dropToken('X', 1);
-        expectedBoard[rows - 3][1] = 'X'; // Update expected board
         board.dropToken('X', 1);
-        expectedBoard[rows - 4][1] = 'X'; // Update expected board
+        BoardPosition lastPos= new BoardPosition(3, 1);
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkVertWin(lastPos,'X'), false);
     }
+
+
+
+
+
 
     @Test
     public void testCheckDiagWinAscendingLeftToRight() {
