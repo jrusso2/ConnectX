@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.beans.Transient;
+
 public class TestGameBoard {
     private IGameBoard gameBoardFactory(int rows, int cols, int win) {
         return new GameBoard(rows, cols, win);
@@ -563,5 +565,76 @@ public void testGameBoardWhatsAtPosTopOfPartiallyFullColumn() {
     BoardPosition Position= new BoardPosition(4, 0);
 
     assertEquals(board.whatsAtPos(Position),'X');
+}
+
+
+
+
+//isPlayerAtPos
+//- Create 5 distinct test cases
+//checks if player is at position for an unoccupied space at the bottom of a column
+@Test
+public void testGameBoardIsPlayerAtPosEmptySpace() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    BoardPosition Position= new BoardPosition(0, 0);
+
+    assertEquals(board.isPlayerAtPos(Position, 'X'),false);
+}
+//checks if correct player is at the occupied space at the bottom of a column
+@Test
+public void testGameBoardIsPlayerAtPosOccupiedSpaceCorrectPlayer() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    board.dropToken('X', 0);
+    BoardPosition Position= new BoardPosition(0, 0);
+    assertEquals(board.isPlayerAtPos(Position, 'X'), true);
+}
+//checks if the incorrect player is at the occupied space at the bottom of a column
+@Test
+public void testGameBoardIsPlayerAtPosOccupiedSpaceIncorrectPlayerBottomOfColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    board.dropToken('X', 0);
+    BoardPosition Position= new BoardPosition(0, 0);
+    assertEquals(board.isPlayerAtPos(Position, 'O'), false);
+}
+//checks if the correct player is at the position of the occupied space at the top of a column
+@Test
+public void testGameBoardIsPlayerAtPosOccupiedSpaceTopOfColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    BoardPosition Position= new BoardPosition(5, 0);
+    assertEquals(board.isPlayerAtPos(Position, 'O'), true);
+}
+//checks if the correct player is at the position of the occupied space at the middle of a column
+@Test
+public void testGameBoardIsPlayerAtPosOccupiedSpaceMiddleOfColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    BoardPosition Position= new BoardPosition(2, 0);
+    assertEquals(board.isPlayerAtPos(Position, 'X'), true);
 }
 }

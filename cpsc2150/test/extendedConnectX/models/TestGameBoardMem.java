@@ -561,7 +561,71 @@ public void testGameBoardMemWhatsAtPosTopOfPartiallyFullColumn() {
 
 //isPlayerAtPos
 //- Create 5 distinct test cases
+//checks if player is at position for an unoccupied space at the bottom of a column
+@Test
+public void testGameBoardMemIsPlayerAtPosEmptySpace() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    BoardPosition Position= new BoardPosition(0, 0);
 
+    assertEquals(board.isPlayerAtPos(Position, 'X'),false);
+}
+//checks if correct player is at the occupied space at the bottom of a column
+@Test
+public void testGameBoardMemIsPlayerAtPosOccupiedSpaceCorrectPlayer() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('X', 0);
+    BoardPosition Position= new BoardPosition(0, 0);
+    assertEquals(board.isPlayerAtPos(Position, 'X'), true);
+}
+//checks if the incorrect player is at the occupied space at the bottom of a column
+@Test
+public void testGameBoardMemIsPlayerAtPosOccupiedSpaceIncorrectPlayerBottomOfColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('X', 0);
+    BoardPosition Position= new BoardPosition(0, 0);
+    assertEquals(board.isPlayerAtPos(Position, 'O'), false);
+}
+//checks if the correct player is at the position of the occupied space at the top of a column
+@Test
+public void testGameBoardMemIsPlayerAtPosOccupiedSpaceTopOfColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    BoardPosition Position= new BoardPosition(5, 0);
+    assertEquals(board.isPlayerAtPos(Position, 'O'), true);
+}
+//checks if the correct player is at the position of the occupied space at the middle of a column
+@Test
+public void testGameBoardMemIsPlayerAtPosOccupiedSpaceMiddleOfColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    board.dropToken('X',0);
+    board.dropToken('O',0);
+    BoardPosition Position= new BoardPosition(2, 0);
+    assertEquals(board.isPlayerAtPos(Position, 'X'), true);
+}
 
 //dropToken
 //- Create 5 distinct test cases
