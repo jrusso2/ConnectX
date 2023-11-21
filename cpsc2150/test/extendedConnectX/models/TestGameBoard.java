@@ -143,91 +143,72 @@ public class TestGameBoard {
 
     //checkHorizWin
     //Create 4 distinct test cases
+//checks for horizontal win when the last token is placed on the far left side of the horizontal line
     @Test
-    public void testCheckHorizWinBottomLeft_LeftToRight() {
+    public void testGameBoardCheckHorizWinBottomLeft() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
-
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
+        int win = 4;
+        IGameBoard board = gameBoardFactory(rows, cols, win);
         for (int col = 0; col < 4; col++) {
             board.dropToken('X', col);
-            expectedBoard[rows - 1][col] = 'X'; // Update expected board
         }
+        BoardPosition lastPos= new BoardPosition(0, 0);
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkHorizWin(lastPos,'X'),true);
     }
-
-    @Test
-    public void testCheckHorizWinBottomLeft_RightToLeft() {
+//checks for horizontal win when the last token is placed on the far right side of the horizontal line
+        @Test
+    public void testGameBoardCheckHorizWinBottomRight() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
-
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
-        for (int col = 3; col >= 0; col--) {
+        int win = 4;
+        IGameBoard board = gameBoardFactory(rows, cols, win);
+        for (int col = 0; col < 4; col++) {
             board.dropToken('X', col);
-            expectedBoard[rows - 1][col] = 'X'; // Update expected board
         }
+        BoardPosition lastPos= new BoardPosition(0, 3);
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkHorizWin(lastPos,'X'),true);
     }
-
+//checks for horizontal win when the last token is placed in the middle of the horizontal line
     @Test
-    public void testCheckHorizWinDropTokenInMiddle() {
+    public void testGameBoardCheckHorizWinDropTokenInMiddle() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
-
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
+        int win = 4;
+        IGameBoard board = gameBoardFactory(rows, cols, win);
         int[] dropOrder = {0, 2, 3, 1};
         for (int col : dropOrder) {
             board.dropToken('X', col);
-            expectedBoard[rows - 1][col] = 'X'; // Update expected board
         }
+        BoardPosition lastPos= new BoardPosition(0, 1);
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkHorizWin(lastPos,'X'),true);
     }
-
+//checks for horizontal win when there is not NUM_TO_WIN in a row of the same type
     @Test
-    public void testCheckHorizWinWithBrokenLine() {
+    public void testGameBoardCheckHorizWinWithBrokenLine() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
+        int win = 4;
 
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
+        IGameBoard board = gameBoardFactory(rows, cols, win);
         board.dropToken('X', 0);
-        expectedBoard[rows - 1][0] = 'X'; // Update expected board
         board.dropToken('X', 1);
-        expectedBoard[rows - 1][1] = 'X'; // Update expected board
         board.dropToken('O', 2);
-        expectedBoard[rows - 1][2] = 'O'; // Update expected board
         board.dropToken('X', 3);
-        expectedBoard[rows - 1][3] = 'X'; // Update expected board
+        board.dropToken('X', 4);
+        BoardPosition lastPos= new BoardPosition(0, 4);
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkHorizWin(lastPos,'X'),false);
     }
 
+
+
+
+//checkVertWin
+//- Create 4 distinct test cases
     @Test
     public void testCheckVertWinEmptyColumn() {
         int rows = 6;

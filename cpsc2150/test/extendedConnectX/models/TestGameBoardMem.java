@@ -87,7 +87,7 @@ public void testGameBoardMemConstructorMaxVals() {
             expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
         }
     }
-    
+
     assertEquals(boardToString(expectedBoard), board.toString());
 }
 
@@ -139,6 +139,68 @@ public void testGameBoardMemCheckIfFreeFilledColumn() {
 
 //checkHorizWin
 //Create 4 distinct test cases
+//checks for horizontal win when the last token is placed on the far left side of the horizontal line
+    @Test
+    public void testGameBoardMemCheckHorizWinBottomLeft() {
+        int rows = 6;
+        int cols = 7;
+        int win = 4;
+        IGameBoard board = gameBoardMemFactory(rows, cols, win);
+        for (int col = 0; col < 4; col++) {
+            board.dropToken('X', col);
+        }
+        BoardPosition lastPos= new BoardPosition(0, 0);
+
+        assertEquals(board.checkHorizWin(lastPos,'X'),true);
+    }
+//checks for horizontal win when the last token is placed on the far right side of the horizontal line
+        @Test
+    public void testGameBoardMemCheckHorizWinBottomRight() {
+        int rows = 6;
+        int cols = 7;
+        int win = 4;
+        IGameBoard board = gameBoardMemFactory(rows, cols, win);
+        for (int col = 0; col < 4; col++) {
+            board.dropToken('X', col);
+        }
+        BoardPosition lastPos= new BoardPosition(0, 3);
+
+        assertEquals(board.checkHorizWin(lastPos,'X'),true);
+    }
+//checks for horizontal win when the last token is placed in the middle of the horizontal line
+    @Test
+    public void testGameBoardMemCheckHorizWinDropTokenInMiddle() {
+        int rows = 6;
+        int cols = 7;
+        int win = 4;
+        IGameBoard board = gameBoardMemFactory(rows, cols, win);
+        int[] dropOrder = {0, 2, 3, 1};
+        for (int col : dropOrder) {
+            board.dropToken('X', col);
+        }
+        BoardPosition lastPos= new BoardPosition(0, 1);
+
+        assertEquals(board.checkHorizWin(lastPos,'X'),true);
+    }
+//checks for horizontal win when there is not NUM_TO_WIN in a row of the same type
+    @Test
+    public void testGameBoardMemCheckHorizWinWithBrokenLine() {
+        int rows = 6;
+        int cols = 7;
+        int win = 4;
+
+        IGameBoard board = gameBoardMemFactory(rows, cols, win);
+        board.dropToken('X', 0);
+        board.dropToken('X', 1);
+        board.dropToken('O', 2);
+        board.dropToken('X', 3);
+        board.dropToken('X', 4);
+        BoardPosition lastPos= new BoardPosition(0, 4);
+
+        assertEquals(board.checkHorizWin(lastPos,'X'),false);
+    }
+
+
 
 
 //checkVertWin

@@ -117,7 +117,7 @@ public interface IGameBoard {
      * @param p   player who placed the last token
      * @return true if last token placed matches NUM_TO_WIN tokens horizontally, false if not
      * @pre p != " "
-     * @post [returns true if last placed token is the last to make up the 5 consecutive same tokens horizontally]
+     * @post [returns true if last placed token is the last to make up the NUM_TO_WIN consecutive same tokens horizontally]
      * self = #self
      */
     default boolean checkHorizWin(BoardPosition pos, char p) {
