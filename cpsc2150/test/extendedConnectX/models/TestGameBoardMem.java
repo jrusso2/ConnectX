@@ -40,12 +40,101 @@ public class TestGameBoardMem {
         return sb.toString();
     }
 
-//Create 3 distinct test cases for the constructor
-    @Test
-    public void test(){
 
+
+//Create 3 distinct test cases for the constructor
+//tests a constructor using the standard connect 4 dimensions
+@Test
+public void testGameBoardMemConstructorStandardVals() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    char[][] expectedBoard = new char[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+        }
     }
+    assertEquals(boardToString(expectedBoard), board.toString());
+}
+//tests a constructor using the minimum allowable dimensions
+@Test
+public void testGameBoardMemConstructorMinVals() {
+    int minRows = 3;
+    int minCols = 3;
+    int minWin = 3;
+    IGameBoard board = gameBoardMemFactory(minRows, minCols, minWin);
+    char[][] expectedBoard = new char[minRows][minCols];
+    for (int i = 0; i < minRows; i++) {
+        for (int j = 0; j < minCols; j++) {
+            expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+        }
+    }
+
+    assertEquals(boardToString(expectedBoard), board.toString());
+}
+//tests a constructor using the maximum allowable dimensions
+@Test
+public void testGameBoardMemConstructorMaxVals() {
+    int maxRows = 100;
+    int maxCols = 100;
+    int maxWin = 25;
+    IGameBoard board = gameBoardMemFactory(maxRows, maxCols, maxWin);
+    char[][] expectedBoard = new char[maxRows][maxCols];
+    for (int i = 0; i < maxRows; i++) {
+        for (int j = 0; j < maxCols; j++) {
+            expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+        }
+    }
+    
+    assertEquals(boardToString(expectedBoard), board.toString());
+}
+
+
+
+
+
 //Create 3 distinct test cases for checkIfFree
+//checks if checkiffree returns true when checking an empty column in a new board
+@Test
+public void testGameBoardMemCheckIfFreeEmptyColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 5;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+
+    assertEquals(board.checkIfFree(0), true);
+}
+//checks if checkiffree returns true when checking a column with some spaces occupied, but not all
+@Test
+public void testGameBoardMemCheckIfFreePartiallyFilledColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 5;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('X', 0); // Drop a token in the first column
+
+    assertEquals(board.checkIfFree(0), true);
+}
+//checks if checkiffree returns false when checking a column with all spaces occupied
+@Test
+public void testGameBoardMemCheckIfFreeFilledColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 5;
+
+    IGameBoard board = gameBoardMemFactory(rows, cols, 4);
+    for (int i = 0; i < rows; i++) {
+        board.dropToken('X', 0); // Fill up the first column
+    }
+
+    assertEquals(board.checkIfFree(0), false);
+}
+
+
+
+
 
 
 //checkHorizWin

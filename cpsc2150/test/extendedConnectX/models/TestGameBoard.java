@@ -40,95 +40,109 @@ public class TestGameBoard {
         return sb.toString();
     }
 
+
+
+
+
+    //Create 3 distinct test cases for the constructor
+//tests a constructor using the standard connect 4 dimensions
     @Test
     public void testGameBoardConstructorStandardVals() {
         int rows = 6;
         int cols = 7;
         int win = 4;
         IGameBoard gameBoard = gameBoardFactory(rows, cols, win);
+        char[][] expectedBoard = new char[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+            }
+        }
 
-        assertEquals(rows, gameBoard.getNumRows());
-        assertEquals(cols, gameBoard.getNumColumns());
-        assertEquals(win, gameBoard.getNumToWin());
+        assertEquals(boardToString(expectedBoard), gameBoard.toString());
     }
 
+//tests a constructor using the minimum allowable dimensions
     @Test
     public void testGameBoardConstructorMinVals() {
         int minRows = 3;
         int minCols = 3;
         int minWin = 3;
         IGameBoard gameBoard = gameBoardFactory(minRows, minCols, minWin);
+        char[][] expectedBoard = new char[minRows][minCols];
+        for (int i = 0; i < minRows; i++) {
+            for (int j = 0; j < minCols; j++) {
+                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+            }
+        }
 
-        assertEquals(minRows, gameBoard.getNumRows());
-        assertEquals(minCols, gameBoard.getNumColumns());
-        assertEquals(minWin, gameBoard.getNumToWin());
+         assertEquals(boardToString(expectedBoard), gameBoard.toString());
     }
 
+//tests a constructor using the maximum allowable dimensions
     @Test
     public void testGameBoardConstructorMaxVals() {
         int maxRows = 100;
         int maxCols = 100;
         int maxWin = 25;
         IGameBoard gameBoard = gameBoardFactory(maxRows, maxCols, maxWin);
-
-        assertEquals(maxRows, gameBoard.getNumRows());
-        assertEquals(maxCols, gameBoard.getNumColumns());
-        assertEquals(maxWin, gameBoard.getNumToWin());
-    }
-
-    @Test
-    public void testCheckIfFreeEmptyColumn() {
-        int rows = 6;
-        int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        char[][] expectedBoard = new char[maxRows][maxCols];
+        for (int i = 0; i < maxRows; i++) {
+            for (int j = 0; j < maxCols; j++) {
                 expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
             }
         }
 
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
-        assertEquals(boardToString(expectedBoard), board.toString());
+         assertEquals(boardToString(expectedBoard), gameBoard.toString());
     }
 
+
+
+
+
+    //Create 3 distinct test cases for checkIfFree
+//checks if checkiffree returns true when checking an empty column in a new board
     @Test
-    public void testCheckIfFreePartiallyFilledColumn() {
+    public void testGameBoardCheckIfFreeEmptyColumn() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
+        int win = 5;
+        IGameBoard board = gameBoardFactory(rows, cols, win);
 
-        IGameBoard board = gameBoardFactory(rows, cols, 4);
+        assertEquals(board.checkIfFree(0), true);
+    }
+//checks if checkiffree returns true when checking a column with some spaces occupied, but not all
+    @Test
+    public void testGameBoardCheckIfFreePartiallyFilledColumn() {
+        int rows = 6;
+        int cols = 7;
+        int win = 5;
+        IGameBoard board = gameBoardFactory(rows, cols, win);
         board.dropToken('X', 0); // Drop a token in the first column
-        expectedBoard[5][0] = 'X'; // Update expected board
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkIfFree(0), true);
     }
-
+//checks if checkiffree returns false when checking a column with all spaces occupied
     @Test
-    public void testCheckIfFreeFilledColumn() {
+    public void testGameBoardCheckIfFreeFilledColumn() {
         int rows = 6;
         int cols = 7;
-        char[][] expectedBoard = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
-            }
-        }
+        int win = 5;
 
         IGameBoard board = gameBoardFactory(rows, cols, 4);
         for (int i = 0; i < rows; i++) {
             board.dropToken('X', 0); // Fill up the first column
-            expectedBoard[rows - 1 - i][0] = 'X'; // Update expected board
         }
 
-        assertEquals(boardToString(expectedBoard), board.toString());
+        assertEquals(board.checkIfFree(0), false);
     }
 
+
+
+
+
+    //checkHorizWin
+    //Create 4 distinct test cases
     @Test
     public void testCheckHorizWinBottomLeft_LeftToRight() {
         int rows = 6;
