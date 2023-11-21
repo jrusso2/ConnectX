@@ -1,5 +1,3 @@
-package extendedConnectX.models;
-
 import cpsc2150.extendedConnectX.models.IGameBoard;
 import cpsc2150.extendedConnectX.models.BoardPosition;
 import cpsc2150.extendedConnectX.models.GameBoardMem;
