@@ -580,6 +580,10 @@ public class TestGameBoard {
         board.dropToken('O', 0);
         BoardPosition Position = new BoardPosition(2, 0);
 
+
+        // Print the actual state of the game board
+        System.out.println("Actual Board State:");
+        System.out.println(board.toString());
         assertEquals(board.whatsAtPos(Position), 'X');
     }
 

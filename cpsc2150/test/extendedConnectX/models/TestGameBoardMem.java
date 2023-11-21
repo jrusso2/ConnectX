@@ -147,7 +147,7 @@ public void testGameBoardConstructorStandardVals() {
         for (int col = 0; col < 4; col++) {
             board.dropToken('X', col);
         }
-        BoardPosition lastPos = new BoardPosition(0, 0);
+        BoardPosition lastPos = new BoardPosition(rows-1, 0);
 
         assertEquals(board.checkHorizWin(lastPos, 'X'), true);
     }
@@ -162,7 +162,7 @@ public void testGameBoardConstructorStandardVals() {
         for (int col = 0; col < 4; col++) {
             board.dropToken('X', col);
         }
-        BoardPosition lastPos = new BoardPosition(0, 3);
+        BoardPosition lastPos = new BoardPosition(rows-1, 3);
 
         assertEquals(board.checkHorizWin(lastPos, 'X'), true);
     }
@@ -178,7 +178,7 @@ public void testGameBoardConstructorStandardVals() {
         for (int col : dropOrder) {
             board.dropToken('X', col);
         }
-        BoardPosition lastPos = new BoardPosition(0, 1);
+        BoardPosition lastPos = new BoardPosition(rows-1, 1);
 
         assertEquals(board.checkHorizWin(lastPos, 'X'), true);
     }
@@ -251,7 +251,8 @@ public void testGameBoardConstructorStandardVals() {
         for (int i = 0; i < 4; i++) {
             board.dropToken('X', 2); // Drop winning pieces
         }
-        BoardPosition lastPos = new BoardPosition(5, 2);
+        BoardPosition lastPos = new BoardPosition(0, 2);
+
 
         assertEquals(board.checkVertWin(lastPos, 'X'), true);
     }
@@ -292,8 +293,7 @@ public void testGameBoardConstructorStandardVals() {
         for (int k = 0; k < 4; k++) {
             board.dropToken('X', k);
         }
-        BoardPosition lastPos = new BoardPosition(3, 3);
-
+        BoardPosition lastPos = new BoardPosition(2, 3);
         assertEquals(board.checkDiagWin(lastPos, 'X'), true);
     }
 
@@ -313,7 +313,7 @@ public void testGameBoardConstructorStandardVals() {
         for (int k = 0; k < 4; k++) {
             board.dropToken('X', k);
         }
-        BoardPosition lastPos = new BoardPosition(0, 0);
+        BoardPosition lastPos = new BoardPosition(rows-1, 0);
 
         assertEquals(board.checkDiagWin(lastPos, 'X'), true);
     }
@@ -334,9 +334,10 @@ public void testGameBoardConstructorStandardVals() {
         for (int k = 0; k < 4; k++) {
             board.dropToken('X', k);
         }
-        BoardPosition lastPos = new BoardPosition(1, 1);
+        BoardPosition lastPos = new BoardPosition(4, 1);
 
         assertEquals(board.checkDiagWin(lastPos, 'X'), true);
+
     }
 
     //checks for a diagonal win when there are not NUM_TO_WIN pieces in a row diagonally
@@ -540,10 +541,15 @@ public void testGameBoardConstructorStandardVals() {
         int cols = 7;
         int win = 4;
         IGameBoard board = gameBoardMemFactory(rows, cols, win);
-        board.dropToken('X', 0);
-        BoardPosition Position = new BoardPosition(0, 0);
 
-        assertEquals(board.whatsAtPos(Position), 'X');
+        // Drop a token in the first column
+        board.dropToken('X', 0);
+
+        // Create the position to check - bottom of the first column
+        BoardPosition position = new BoardPosition(rows - 1, 0); // Assuming the bottom row is rows - 1
+
+        // Assert that the token is at the expected position
+        assertEquals('X', board.whatsAtPos(position));
     }
 
     //checks whats at position at the top of a full column
@@ -559,7 +565,7 @@ public void testGameBoardConstructorStandardVals() {
         board.dropToken('O', 0);
         board.dropToken('X', 0);
         board.dropToken('O', 0);
-        BoardPosition Position = new BoardPosition(5, 0);
+        BoardPosition Position = new BoardPosition(0, 0);
 
         assertEquals(board.whatsAtPos(Position), 'O');
     }
@@ -577,7 +583,9 @@ public void testGameBoardConstructorStandardVals() {
         board.dropToken('O', 0);
         board.dropToken('X', 0);
         board.dropToken('O', 0);
-        BoardPosition Position = new BoardPosition(2, 0);
+        BoardPosition Position = new BoardPosition(3, 0);
+
+
 
         assertEquals(board.whatsAtPos(Position), 'X');
     }
@@ -594,7 +602,8 @@ public void testGameBoardConstructorStandardVals() {
         board.dropToken('X', 0);
         board.dropToken('O', 0);
         board.dropToken('X', 0);
-        BoardPosition Position = new BoardPosition(4, 0);
+        BoardPosition Position = new BoardPosition(1, 0);
+
 
         assertEquals(board.whatsAtPos(Position), 'X');
     }
@@ -611,6 +620,7 @@ public void testGameBoardConstructorStandardVals() {
         IGameBoard board = gameBoardMemFactory(rows, cols, win);
         BoardPosition Position = new BoardPosition(0, 0);
 
+
         assertEquals(board.isPlayerAtPos(Position, 'X'), false);
     }
 
@@ -622,7 +632,9 @@ public void testGameBoardConstructorStandardVals() {
         int win = 4;
         IGameBoard board = gameBoardMemFactory(rows, cols, win);
         board.dropToken('X', 0);
-        BoardPosition Position = new BoardPosition(0, 0);
+        BoardPosition Position = new BoardPosition(rows-1, 0);
+
+
         assertEquals(board.isPlayerAtPos(Position, 'X'), true);
     }
 
@@ -651,7 +663,7 @@ public void testGameBoardConstructorStandardVals() {
         board.dropToken('O', 0);
         board.dropToken('X', 0);
         board.dropToken('O', 0);
-        BoardPosition Position = new BoardPosition(5, 0);
+        BoardPosition Position = new BoardPosition(0, 0);
         assertEquals(board.isPlayerAtPos(Position, 'O'), true);
     }
 
@@ -668,7 +680,7 @@ public void testGameBoardConstructorStandardVals() {
         board.dropToken('O', 0);
         board.dropToken('X', 0);
         board.dropToken('O', 0);
-        BoardPosition Position = new BoardPosition(2, 0);
+        BoardPosition Position = new BoardPosition(3, 0);
         assertEquals(board.isPlayerAtPos(Position, 'X'), true);
     }
 
