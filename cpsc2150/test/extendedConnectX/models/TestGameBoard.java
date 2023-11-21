@@ -637,4 +637,147 @@ public void testGameBoardIsPlayerAtPosOccupiedSpaceMiddleOfColumn() {
     BoardPosition Position= new BoardPosition(2, 0);
     assertEquals(board.isPlayerAtPos(Position, 'X'), true);
 }
+
+
+
+
+
+
+//dropToken
+//- Create 5 distinct test cases
+//tests using droptoken on an empty column
+@Test
+public void testGameBoardDroptokenEmptyColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    char[][] expectedBoard = new char[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+        }
+    }
+    board.dropToken('X', 0);
+    expectedBoard[0][0]='X';
+
+    assertEquals(boardToString(expectedBoard), board.toString());
+}
+//tests using droptoken to partially fill up a column
+@Test
+public void testGameBoardDroptokenPartialColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    char[][] expectedBoard = new char[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+        }
+    }
+    board.dropToken('X', 0);
+    board.dropToken('O', 0);
+    board.dropToken('X', 0);
+    expectedBoard[0][0]='X';
+    expectedBoard[1][0]='O';
+    expectedBoard[2][0]='X';
+
+    assertEquals(boardToString(expectedBoard), board.toString());
+}
+//tests using droptoken to completely fill up a column
+@Test
+public void testGameBoardDroptokenFullColumn() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    char[][] expectedBoard = new char[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+        }
+    }
+    board.dropToken('X', 0);
+    board.dropToken('O', 0);
+    board.dropToken('X', 0);
+    board.dropToken('O', 0);
+    board.dropToken('X', 0);
+    board.dropToken('O', 0);
+
+    expectedBoard[0][0]='X';
+    expectedBoard[1][0]='O';
+    expectedBoard[2][0]='X';
+    expectedBoard[3][0]='O';
+    expectedBoard[4][0]='X';
+    expectedBoard[5][0]='O';
+
+    assertEquals(boardToString(expectedBoard), board.toString());
+}
+//tests using droptoken to completely fill up a column
+@Test
+public void testGameBoardDroptokenFullRow() {
+    int rows = 6;
+    int cols = 7;
+    int win = 4;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    char[][] expectedBoard = new char[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+        }
+    }
+    board.dropToken('X', 0);
+    board.dropToken('X', 0);
+    board.dropToken('X', 0);
+    board.dropToken('X', 0);
+    board.dropToken('X', 0);
+    board.dropToken('X', 0);
+    board.dropToken('X', 0);
+
+    expectedBoard[0][0]='X';
+    expectedBoard[0][1]='X';
+    expectedBoard[0][2]='X';
+    expectedBoard[0][3]='X';
+    expectedBoard[0][4]='X';
+    expectedBoard[0][5]='X';
+    expectedBoard[0][6]='X';
+
+    assertEquals(boardToString(expectedBoard), board.toString());
+}
+//tests using droptoken to completely fill up a board
+@Test
+public void testGameBoardDroptokenFillEntireBoard() {
+    int rows = 3;
+    int cols = 3;
+    int win = 3;
+    IGameBoard board = gameBoardFactory(rows, cols, win);
+    char[][] expectedBoard = new char[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+        }
+    }
+        board.dropToken('X',0);
+        board.dropToken('X',0);
+        board.dropToken('O',1);
+        board.dropToken('O',1);
+        board.dropToken('X',2);
+        board.dropToken('X',2);
+        board.dropToken('O',0);
+        board.dropToken('X',1);
+        board.dropToken('O',2);
+
+        expectedBoard[0][0]='X';
+        expectedBoard[1][0]='X';
+        expectedBoard[2][0]='O';
+        expectedBoard[0][1]='O';
+        expectedBoard[1][1]='O';
+        expectedBoard[2][1]='X';
+        expectedBoard[0][2]='X';
+        expectedBoard[1][2]='X';
+        expectedBoard[2][2]='O';
+
+    assertEquals(boardToString(expectedBoard), board.toString());
+}
 }
