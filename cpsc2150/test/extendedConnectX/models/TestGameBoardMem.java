@@ -422,6 +422,64 @@ public void testGameBoardMemCheckDiagWinDescendingLastTokenMiddle() {
 
 //checkTie
 //- Create 4 distinct test cases
+//tests for a tie when the board is full and there are two players
+@Test
+public void testGameBoardMemCheckTieFullBoard() {
+    int rows = 3;
+    int cols = 3;
+    int win = 3;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('X',0);
+    board.dropToken('O',1);
+    board.dropToken('O',1);
+    board.dropToken('X',2);
+    board.dropToken('X',2);
+    board.dropToken('O',0);
+    board.dropToken('X',1);
+    board.dropToken('O',2);
+    assertEquals(board.checkTie(), true);
+}
+//tests for a tie when one free space remains
+@Test
+public void testGameBoardMemCheckTieOneFreeSpace() {
+    int rows = 3;
+    int cols = 3;
+    int win = 3;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('X',0);
+    board.dropToken('O',1);
+    board.dropToken('O',1);
+    board.dropToken('X',2);
+    board.dropToken('X',2);
+    board.dropToken('O',0);
+    board.dropToken('X',1);
+    assertEquals(board.checkTie(), false);
+}
+//tests for a tie when the board is empty and there are two players
+@Test
+public void testGameBoardMemCheckTieEmptyBoard() {
+    int rows = 3;
+    int cols = 3;
+    int win = 3;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    assertEquals(board.checkTie(), false);
+}
+//tests for a tie when one free column remains
+@Test
+public void testGameBoardMemCheckTieOneFreeColumn() {
+    int rows = 3;
+    int cols = 3;
+    int win = 3;
+    IGameBoard board = gameBoardMemFactory(rows, cols, win);
+    board.dropToken('X',0);
+    board.dropToken('X',0);
+    board.dropToken('O',1);
+    board.dropToken('O',1);
+    board.dropToken('O',0);
+    board.dropToken('X',1);
+    assertEquals(board.checkTie(), false);
 
 
 //whatsAtPos
