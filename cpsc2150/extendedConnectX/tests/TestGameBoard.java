@@ -417,7 +417,7 @@ public class TestGameBoard {
             expectedBoard[rows - 1 - i][i] = 'X'; // Place 'X' from bottom up
         }
 
-        BoardPosition lastPos = new BoardPosition(3, 3); // Position of the last 'X' token
+        BoardPosition lastPos = new BoardPosition(0, 3); // Position of the last 'X' token
 
         assertEquals(boardToString(expectedBoard), board.toString());
     }
