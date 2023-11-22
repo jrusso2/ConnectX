@@ -51,7 +51,7 @@ public void testGameBoardConstructorStandardVals() {
     char[][] expectedBoard = new char[rows][cols];
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+            expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
         }
     }
 
@@ -68,7 +68,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[minRows][minCols];
         for (int i = 0; i < minRows; i++) {
             for (int j = 0; j < minCols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
 
@@ -85,7 +85,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[maxRows][maxCols];
         for (int i = 0; i < maxRows; i++) {
             for (int j = 0; j < maxCols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
 
@@ -370,7 +370,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
 
@@ -403,7 +403,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
 
@@ -432,7 +432,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
 
@@ -695,7 +695,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
         board.dropToken('X', 0);
@@ -714,7 +714,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
         board.dropToken('X', 0);
@@ -737,7 +737,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
 
@@ -759,7 +759,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
 
@@ -783,7 +783,7 @@ public void testGameBoardConstructorStandardVals() {
         char[][] expectedBoard = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                expectedBoard[i][j] = ' '; // Assuming ' ' represents an empty cell
+                expectedBoard[i][j] = ' '; //  ' ' represents an empty cell
             }
         }
 
