@@ -1,16 +1,13 @@
-# Project One
-Part 1 due: 9-15 @ 11:59 PM \
-Part 2 due: 9-20 @ 11:59 PM \
-Final Submission due: 9-25 @ 11:59 PM \
-This project should be runnable with JDK17
+# ConnectX
+
 --------------------------------------------------------
-## Contribution Statements:
+## Contribution Statements (Project 4):
 
 Should be in a format similar to this. One for each group member:\
-Jason Russo (jrusso2) - wrote contracts for GameBoard and Project Report and helped revise them based on feedback.
-Evan Schwartz (eschwa2) - Wrote majority of Project report and helped revise GameBoard contracts and Project Report
-Joe Becker (BoiledPNutEnjoyer) - wrote contracts for BoardPosition and Project Report. Helped revise both based on feedback
-...
+Jason Russo (jrusso2) - Assisted in writing tests for testGameBoard, testGameBoardMem, and writing documentation.
+Evan Schwartz (eschwa2) - Assisted in debugging test cases, and wrote the majority of documentation.
+Joe Becker (BoiledPNutEnjoyer) - Assisted in writing tests for testGameBoard and testGameBoardMem.
+
 --------------------------------------------------------
 ## makefile Directions:
 
