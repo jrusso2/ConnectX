@@ -20,6 +20,6 @@ Several test cases have slightly different implementations in TestGameBoard and 
 the perspective change between a gameBoard (represented by a 2D array) and gameBoardMem (represented by a hashmap).
 
 Ex:
-In the test function 'testGameBoardWhatsAtPosBottomOfColumnOneTokenPlayed' --
-gameBoard implementation (line 543)    : BoardPosition Position = new BoardPosition(0, 0);
+In the test function 'testGameBoardWhatsAtPosBottomOfColumnOneTokenPlayed' \
+gameBoard implementation (line 543) ------ : BoardPosition Position = new BoardPosition(0, 0);\
 gameBoardMem implementation (line 547) : BoardPosition position = new BoardPosition(5, 0);
