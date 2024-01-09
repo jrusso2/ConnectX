@@ -1,5 +1,5 @@
 ## ConnectX
-
+This project was made by a team of 3 students as part of Clemsons CPSC 2150 (Software Development Foundations) coursework. 
 This is a simple connect 4 style game played in the command line. The makefile is not required to run the game. 
 
 --------------------------------------------------------
