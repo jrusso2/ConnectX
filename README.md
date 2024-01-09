@@ -1,12 +1,6 @@
-# ConnectX
+## ConnectX
 
---------------------------------------------------------
-## Contribution Statements (Project 4):
-
-Should be in a format similar to this. One for each group member:\
-Jason Russo (jrusso2) - Assisted in writing tests for testGameBoard, testGameBoardMem, and writing documentation.
-Evan Schwartz (eschwa2) - Assisted in debugging test cases, and wrote the majority of documentation.
-Joe Becker (BoiledPNutEnjoyer) - Assisted in writing tests for testGameBoard and testGameBoardMem.
+This is a simple connect 4 style game played in the command line. The makefile is not required to run the game. 
 
 --------------------------------------------------------
 ## makefile Directions:
